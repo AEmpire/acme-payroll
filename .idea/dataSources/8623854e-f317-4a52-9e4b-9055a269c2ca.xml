@@ -16,70 +16,90 @@
     </schema>
     <table id="8" parent="6" name="employees"/>
     <table id="9" parent="6" name="payrolldata"/>
-    <table id="10" parent="6" name="users"/>
-    <column id="11" parent="8" name="employee_id">
+    <table id="10" parent="6" name="project management database"/>
+    <table id="11" parent="6" name="users"/>
+    <column id="12" parent="8" name="employee_id">
       <Position>1</Position>
       <DataType>int(20)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="12" parent="8" name="employee_first_name">
+    <column id="13" parent="8" name="employee_first_name">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="13" parent="8" name="employee_last_name">
+    <column id="14" parent="8" name="employee_last_name">
       <Position>3</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="14" parent="8" name="hourly_wage">
+    <column id="15" parent="8" name="hourly_wage">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="15" parent="8" name="exempt_flag">
+    <column id="16" parent="8" name="exempt_flag">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="16" parent="8" name="PRIMARY">
+    <key id="17" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>employee_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="17" parent="9" name="employee_id">
+    <column id="18" parent="9" name="employee_id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="18" parent="9" name="week_number">
+    <column id="19" parent="9" name="week_number">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="19" parent="9" name="year">
+    <column id="20" parent="9" name="year">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="9" name="hours_worked">
+    <column id="21" parent="9" name="hours_worked">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <key id="21" parent="9" name="PRIMARY">
+    <key id="22" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>employee_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="22" parent="10" name="user_name">
+    <column id="23" parent="10" name="charge_num">
+      <Position>1</Position>
+      <DataType>int(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="24" parent="10" name="project">
+      <Position>2</Position>
+      <DataType>char(10)|0</DataType>
+    </column>
+    <key id="25" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>charge_num</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="26" parent="11" name="user_name">
       <Position>1</Position>
       <DataType>char(40)|0</DataType>
     </column>
-    <column id="23" parent="10" name="user_pwd">
+    <column id="27" parent="11" name="user_pwd">
       <Position>2</Position>
       <DataType>char(20)|0</DataType>
+    </column>
+    <column id="28" parent="11" name="user_type">
+      <Position>3</Position>
+      <DataType>char(10)|0</DataType>
+      <NotNull>1</NotNull>
     </column>
   </database-model>
 </dataSource>

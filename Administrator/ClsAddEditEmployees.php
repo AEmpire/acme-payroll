@@ -7,8 +7,9 @@
  */
 
 namespace ruanjian;
-require_once 'ClsDataLayer.php';
-require_once 'ClsUtility.php';
+
+require_once '../ClsDataLayer.php';
+require_once '../ClsUtility.php';
 
 /**
  * Class ClsAddEditEmployees
@@ -50,8 +51,9 @@ class ClsAddEditEmployees
 
         if ($this->cookieOk == 1) {
 
-            $this->processPostData();
-
+            if ($this->postDataArray!=null) {
+                $this->processPostData();
+            }
             $this->employeeData = $this->dataLayer->getEmployees();
 
         }
@@ -95,6 +97,9 @@ class ClsAddEditEmployees
         return $this->employeeData;
     }
 
+    function deleteEmployeeData($rowid){
+        $this->dataLayer->deleteEmployees($rowid);
+    }
     // end class field getters
 
     /**
@@ -102,22 +107,28 @@ class ClsAddEditEmployees
      */
     private function processPostData() {
 
-        if (isset($this->postDataArray['employeeid'])) {
 
-            $employeeId = $this->utility->cleanse_input($this->postDataArray['employeeid']);
-            $firstName = $this->utility->cleanse_input($this->postDataArray['firstname']);
-            $lastName = $this->utility->cleanse_input($this->postDataArray['lastname']);
-            $hourlyWage = $this->utility->cleanse_input($this->postDataArray['hourlywage']);
+        if ($this->postDataArray['submit']=='delete') {
+            $this->deleteEmployeeData($this->postDataArray['rowid']);
+        }
+        else {
+            if (isset($this->postDataArray['employeeid'])) {
 
-            if (isset($this->postDataArray['exempt'])) {
-                $exemptStatus = 1;
-            } else {
-                $exemptStatus = 0;
+                $employeeId = $this->utility->cleanse_input($this->postDataArray['employeeid']);
+                $firstName = $this->utility->cleanse_input($this->postDataArray['firstname']);
+                $lastName = $this->utility->cleanse_input($this->postDataArray['lastname']);
+                $hourlyWage = $this->utility->cleanse_input($this->postDataArray['hourlywage']);
+
+                if (isset($this->postDataArray['exempt'])) {
+                    $exemptStatus = 1;
+                } else {
+                    $exemptStatus = 0;
+                }
+
+                $this->dataLayer->addEditEmployee($employeeId, $firstName, $lastName, $hourlyWage, $exemptStatus);
             }
 
-            $this->dataLayer->addEditEmployee($employeeId, $firstName, $lastName, $hourlyWage, $exemptStatus);
         }
-
     }
 
 

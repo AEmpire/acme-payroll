@@ -7,8 +7,8 @@
  */
 
 namespace ruanjian;
-require_once 'ClsDataLayer.php';
-require_once 'ClsUtility.php';
+require_once '../ClsDataLayer.php';
+require_once '../ClsUtility.php';
 
 /**
  * Class ClsDefault

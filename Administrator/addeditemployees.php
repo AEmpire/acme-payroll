@@ -7,20 +7,20 @@
  */
 require_once 'ClsAddEditEmployees.php';
 
-$clsAddEditEmployees = new ruanjian\ClsAddEditEmployees($_COOKIE, $_GET);
+    $clsAddEditEmployees = new ruanjian\ClsAddEditEmployees($_COOKIE, $_GET);
 
-$clsAddEditEmployees->processPageData();
+    $clsAddEditEmployees->processPageData();
 
-$cookieOk = $clsAddEditEmployees->getCookieOk();
+    $cookieOk = $clsAddEditEmployees->getCookieOk();
 
-if ($cookieOk == 0) {
-    echo $clsAddEditEmployees->getCookieNotOkText();
-    exit(0);
-}
+    if ($cookieOk == 0) {
+        echo $clsAddEditEmployees->getCookieNotOkText();
+        exit(0);
+    }
 
-$employeeData = $clsAddEditEmployees->getEmployeeData();
+    $employeeData = $clsAddEditEmployees->getEmployeeData();
 
-$clsAddEditEmployees->resetCookie();
+    $clsAddEditEmployees->resetCookie();
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
@@ -45,7 +45,7 @@ $clsAddEditEmployees->resetCookie();
             document.getElementById("firstname").value =  editFirstName;
             document.getElementById("lastname").value =  editLastName;
             document.getElementById("hourlywage").value =  editHourlyWage;
-            document.getElementById("exempt").checked =  (editExemptFlag == "Yes" ? true : false);
+            document.getElementById("exempt").checked =  (editExemptFlag === "Yes");
         }
 
         function validateform() {
@@ -124,9 +124,14 @@ $clsAddEditEmployees->resetCookie();
             Exempt
         </th>
     </tr>
-    <?php foreach ($employeeData as $employeeDatum): ?>
+    <?php foreach ($employeeData as $employeeDatum):  ?>
     <tr id="<?=$employeeDatum[0];?>">
-        <td><input type="button"  name="Edit" value="Edit" onclick="editrec(<?=$employeeDatum[0];?>)" /></td>
+        <td><input type="button"  name="Edit" value="Edit" onclick="editrec(<?=$employeeDatum[0];?>)" />
+            <form method="get" action="addeditemployees.php" id="addeditemployee">
+                <input type="hidden" name="rowid" value="<?=$employeeDatum[0];?>">
+                <input type="submit" name="submit" value="delete">
+            </form>
+        </td>
         <td><?=$employeeDatum[1];?></td> <td><?=$employeeDatum[2];?></td> <td><?=$employeeDatum[3];?></td>
         <td><?=$employeeDatum[4] == 1 ? "Yes" : "No";?></td>
     </tr>

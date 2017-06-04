@@ -102,6 +102,15 @@ class ClsDataLayer
         return $result;
     }
 
+    function deleteEmployees($rowid){
+        $this->dbConnect();
+        $inputSql="delete from employees WHERE employee_id = $rowid";
+        $sth=$this->inDBH->prepare($inputSql);
+        $sth->execute();
+        $inputSql="delete from payrolldata WHERE employee_id = $rowid";
+        $sth=$this->inDBH->prepare($inputSql);
+        $sth->execute();
+    }
     /**
      * this function checks for a matching value in the Users table
      * for the login and password provided, returning 1 if a match is found

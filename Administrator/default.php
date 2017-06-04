@@ -68,7 +68,7 @@ $clsDefault->resetCookie();
         <option value="<?=$year?>"><?=$year?></option>
     <?php endforeach; ?>
 </select><input type="submit" name=".submit" value="Go" /></form><br><br>
-<form method="post" action="ProcessLogout.php" enctype="multipart/form-data">
+<form method="post" action="../ProcessLogout.php" enctype="multipart/form-data">
     </select><input type="submit" name=".submit" value="Logout" /></form>
 </form>
 </body>

@@ -38,13 +38,13 @@ if (isset($_GET['username']) && isset($_GET['password']))
         <meta charset="UTF-8">
         <meta http-equiv="refresh" content="1; url=./default.php">
         <script type="text/javascript">
-            window.location.href = "./default.php"
+            window.location.href = "Administrator/default.php"
         </script>
         <title>Page Redirection</title>
     </head>
     <body>
 
-    If you are not redirected automatically, follow this <a href='./default.php'</a>.
+    If you are not redirected automatically, follow this <a href='Administrator/default.php'</a>.
         </body>
     </html>
     <?php endif; ?>
