@@ -1,23 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/6/17
- * Time: 8:39 PM
- */
+
 
 namespace ruanjian;
 
 require_once '../ClsDataLayer.php';
 require_once '../ClsUtility.php';
 
-/**
- * Class ClsAddEditEmployees
- * @package clawrence
- * This class serves as the controller for the Add/Edit Employees page
- * The design uses class-level fields for the majority of the shared data
- * required between methods.
- */
 class ClsAddEditEmployees
 {
     private $cookieArray;

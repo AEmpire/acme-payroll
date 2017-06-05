@@ -1,22 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/6/17
- * Time: 8:39 AM
- */
 
 namespace ruanjian;
 require_once '../ClsDataLayer.php';
 require_once '../ClsUtility.php';
 
-/**
- * Class ClsDefault
- * @package clawrence
- * This class serves as the controller for the menu page
- * The design uses class-level fields for the majority of the shared data
- * required between methods.
- */
 class ClsDefault
 {
     private $cookieArray;

@@ -34,69 +34,106 @@
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="15" parent="8" name="hourly_wage">
+    <column id="15" parent="8" name="hour_limit">
       <Position>4</Position>
-      <DataType>int(11)|0</DataType>
-      <NotNull>1</NotNull>
+      <DataType>int(20)|0</DataType>
     </column>
-    <column id="16" parent="8" name="exempt_flag">
+    <column id="16" parent="8" name="commission_rate">
       <Position>5</Position>
+      <DataType>int(20)|0</DataType>
+    </column>
+    <column id="17" parent="8" name="salary">
+      <Position>6</Position>
+      <DataType>int(20)|0</DataType>
+    </column>
+    <column id="18" parent="8" name="other_deductions">
+      <Position>7</Position>
+      <DataType>int(20)|0</DataType>
+    </column>
+    <column id="19" parent="8" name="hourly_wage">
+      <Position>8</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="17" parent="8" name="PRIMARY">
+    <column id="20" parent="8" name="standard_tax_deductions">
+      <Position>9</Position>
+      <DataType>int(20)|0</DataType>
+    </column>
+    <column id="21" parent="8" name="social_security_num">
+      <Position>10</Position>
+      <DataType>int(20)|0</DataType>
+    </column>
+    <column id="22" parent="8" name="mail_address">
+      <Position>11</Position>
+      <DataType>char(20)|0</DataType>
+    </column>
+    <column id="23" parent="8" name="employee_type">
+      <Position>12</Position>
+      <DataType>char(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="24" parent="8" name="phone_number">
+      <Position>13</Position>
+      <DataType>int(20)|0</DataType>
+    </column>
+    <column id="25" parent="8" name="exempt_flag">
+      <Position>14</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="26" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>employee_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="18" parent="9" name="employee_id">
+    <column id="27" parent="9" name="employee_id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="19" parent="9" name="week_number">
+    <column id="28" parent="9" name="week_number">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="9" name="year">
+    <column id="29" parent="9" name="year">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="21" parent="9" name="hours_worked">
+    <column id="30" parent="9" name="hours_worked">
       <Position>4</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <key id="22" parent="9" name="PRIMARY">
+    <key id="31" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>employee_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="23" parent="10" name="charge_num">
+    <column id="32" parent="10" name="charge_num">
       <Position>1</Position>
       <DataType>int(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="24" parent="10" name="project">
+    <column id="33" parent="10" name="project">
       <Position>2</Position>
       <DataType>char(10)|0</DataType>
     </column>
-    <key id="25" parent="10" name="PRIMARY">
+    <key id="34" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>charge_num</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="26" parent="11" name="user_name">
+    <column id="35" parent="11" name="user_name">
       <Position>1</Position>
       <DataType>char(40)|0</DataType>
     </column>
-    <column id="27" parent="11" name="user_pwd">
+    <column id="36" parent="11" name="user_pwd">
       <Position>2</Position>
       <DataType>char(20)|0</DataType>
     </column>
-    <column id="28" parent="11" name="user_type">
+    <column id="37" parent="11" name="user_type">
       <Position>3</Position>
       <DataType>char(10)|0</DataType>
       <NotNull>1</NotNull>

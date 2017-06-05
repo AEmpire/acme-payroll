@@ -1,20 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/3/17
- * Time: 10:43 AM
- */
 
 namespace ruanjian;
 use PDO;
 
-/**
- * Class ClsDataLayer
- * @package clawrence
- *
- * this class contains all of the database interactions
- */
+
 class ClsDataLayer
 {
     private $inDBH;

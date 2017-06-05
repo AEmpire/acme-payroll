@@ -1,12 +1,6 @@
 <?php
 require_once 'ClsDataLayer.php';
 require_once 'ClsUtility.php';
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/4/17
- * Time: 1:57 PM
- */
 
 $dataLayer = new ruanjian\ClsDataLayer();
 $utility = new ruanjian\ClsUtility();

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/10/17
- * Time: 4:47 PM
- */
+
 require_once 'ClsUtility.php';
 
 $utility = new ruanjian\ClsUtility();

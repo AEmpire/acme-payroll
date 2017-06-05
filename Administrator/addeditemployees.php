@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/6/17
- * Time: 8:39 PM
- */
+
 require_once 'ClsAddEditEmployees.php';
 
     $clsAddEditEmployees = new ruanjian\ClsAddEditEmployees($_COOKIE, $_GET);

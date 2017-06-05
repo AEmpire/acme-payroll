@@ -1,20 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/6/17
- * Time: 9:16 PM
- */
 
 namespace ruanjian;
 
 
-/**
- * Class ClsUtility
- * @package clawrence
- *
- * This class serves as a utility class for common functions & variables that have no other home
- */
+
 class ClsUtility
 {
     private $cookieOk;

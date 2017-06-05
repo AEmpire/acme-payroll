@@ -1,22 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clawrence
- * Date: 3/6/17
- * Time: 7:30 PM
- */
+
 
 namespace ruanjian;
 require_once '../ClsDataLayer.php';
 require_once '../ClsUtility.php';
 
-/**
- * Class ClsPayrollEntry
- * @package clawrence
- * This class serves as the controller for the Payroll Entry page
- * The design uses class-level fields for the majority of the shared data
- * required between methods.
- */
+
 class ClsPayrollEntry
 {
     private $cookieArray;
