@@ -1,47 +1,30 @@
 <?php
 
 namespace ruanjian;
+require_once '../Factory/ClsCookieFactory.php';
 require_once '../ClsDataLayer.php';
-require_once '../ClsUtility.php';
 
-class ClsPayrollReports
+
+class ClsPayrollReports extends ClsCookieFactory
 {
-    private $cookieArray;
-    private $postDataArray;
-    private $cookieOk;
-    private $cookieNotOkText;
-    private $weeks;
-    private $years;
     private $weekSelected;
     private $yearSelected;
     private $payrollDataCalculated;
     private $dataLayer;
-    private $utility;
-
-    /**
-     * ClsPayrollReports constructor.
-     * @param $cookieArray
-     * @param $postDataArray
-     */
-    function __construct($cookieArray, $postDataArray)
-    {
-        $this->cookieArray = $cookieArray;
-        $this->postDataArray = $postDataArray;
-        $this->dataLayer = new ClsDataLayer();
-        $this->utility = new ClsUtility();
-    }
 
     /**
      * this function drives the business logic processing for the payroll reports page
      */
     function processPageData() {
 
-        $this->cookieOk = $this->utility->checkAuthCookie($this->cookieArray);
+        $this->dataLayer=new ClsDataLayer();
+
+        $this->cookieOk = $this->checkAuthCookie();
 
         if ($this->cookieOk == 1) {
 
-            $this->weeks = $this->utility->getWeeks();
-            $this->years = $this->utility->getYears();
+            $this->weeks = $this->getWeeks();
+            $this->years = $this->getYears();
 
             $this->processPostData();
 
@@ -49,51 +32,15 @@ class ClsPayrollReports
 
         }
         else {
-            $this->cookieNotOkText = $this->utility->getCookieNotOkText();
+            $this->cookieNotOkText = $this->getCookieNotOkText();
         }
 
     }
 
-    // getters for class fields
-
-    /**
-     * @return mixed
-     */
-    function getWeeks() {
-        return $this->weeks;
-    }
-
-    /**
-     * @return mixed
-     */
-    function getYears() {
-        return $this->years;
-    }
-
-    /**
-     * @return mixed
-     */
     function getPayrollDataCalculated() {
         return $this->payrollDataCalculated;
     }
 
-    /**
-     * @return mixed
-     */
-    function getCookieOk() {
-        return $this->cookieOk;
-    }
-
-    /**
-     * @return mixed
-     */
-    function getCookieNotOkText() {
-        return $this->cookieNotOkText;
-    }
-
-    /**
-     * @return mixed
-     */
     function getWeekSelected() {
         return $this->weekSelected;
     }
@@ -115,8 +62,8 @@ class ClsPayrollReports
         if (isset($this->postDataArray['week']) && isset($this->postDataArray['year']))
         {
 
-            $this->weekSelected = $this->utility->cleanse_input($this->postDataArray['week']);
-            $this->yearSelected = $this->utility->cleanse_input($this->postDataArray['year']);
+            $this->weekSelected = $this->cleanse_input($this->postDataArray['week']);
+            $this->yearSelected = $this->cleanse_input($this->postDataArray['year']);
         }
         else
         {
@@ -125,22 +72,6 @@ class ClsPayrollReports
         }
     }
 
-    /**
-     * this function resets the expiry on the auth cookie.  It checks the class variable
-     * first to ensure validation has occurred.
-     */
-    function resetCookie() {
-        if ($this->cookieOk == 1) {
-            $this->utility->setCookie();
-        }
-
-    }
-
-    /**
-     * function that generates the calculated payroll data array
-     * for the week and year posted to the page
-     * @return array
-     */
     private function generatePayrollDataCalculated() {
 
         $employeeCount = 0;

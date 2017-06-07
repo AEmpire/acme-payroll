@@ -1,20 +1,9 @@
 <?php
-require_once 'ClsDataLayer.php';
-require_once 'ClsUtility.php';
+require_once 'ClsLogin.php';
 
-$dataLayer = new ruanjian\ClsDataLayer();
-$utility = new ruanjian\ClsUtility();
+$utility = new ruanjian\ClsLogin($_GET['username'],$_GET['password'],$_GET['type']);
 $authOK = false;
-if (isset($_GET['username']) && isset($_GET['password']))
-{
-
-    $username = $utility->cleanse_input($_GET['username']);
-    $password = $utility->cleanse_input($_GET['password']);
-    $authOK=$dataLayer->checkLogin($username,$password);
-    if ($authOK !=false) {
-        $utility->setCookie();
-    }
-}
+$authOK=$utility->checkLogin();
 
 ?>
 <?php if ($authOK == false):  ?>
@@ -26,19 +15,39 @@ if (isset($_GET['username']) && isset($_GET['password']))
                 Invalid Username or Bad Password <br>
             </body>
         </html>
-<?php else: ?>
+<?php elseif($_GET['type']=='admin'): ?>
     <html lang="en-US">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="1; url=./default.php">
+        <meta http-equiv="refresh" content="1; url=Administrator/menu.php">
         <script type="text/javascript">
-            window.location.href = "Administrator/default.php"
+            window.location.href = "Administrator/menu.php"
         </script>
         <title>Page Redirection</title>
     </head>
     <body>
 
-    If you are not redirected automatically, follow this <a href='Administrator/default.php'</a>.
+    If you are not redirected automatically, follow this <a href='Administrator/menu.php'></a>
         </body>
+    </html>
+    <?php else:
+    session_start();
+    $_SESSION['type']=$authOK;
+    $_SESSION['id']=$_GET['username'];
+    ?>
+
+    <html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="1; url=Employee/menu.php">
+        <script type="text/javascript">
+            window.location.href = "Employee/employeemenu.php"
+        </script>
+        <title>Page Redirection</title>
+    </head>
+    <body>
+
+    If you are not redirected automatically, follow this <a href='Employee/employeemenu.php'></a>.
+    </body>
     </html>
     <?php endif; ?>

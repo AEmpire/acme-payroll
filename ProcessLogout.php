@@ -1,8 +1,8 @@
 <?php
 
-require_once 'ClsUtility.php';
+require_once 'ClsLogin.php';
 
-$utility = new ruanjian\ClsUtility();
+$utility = new ruanjian\ClsLogin();
 
 $utility->deleteCookie();
 ?>
@@ -18,7 +18,7 @@ $utility->deleteCookie();
     </head>
     <body>
 
-    If you are not redirected automatically, follow this <a href='./login.html'</a>.
+    If you are not redirected automatically, follow this <a href='./login.html'></a>.
         </body>
     </html>
 

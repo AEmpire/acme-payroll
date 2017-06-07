@@ -2,37 +2,16 @@
 
 
 namespace ruanjian;
+require_once '../Factory/ClsCookieFactory.php';
 require_once '../ClsDataLayer.php';
-require_once '../ClsUtility.php';
 
 
-class ClsPayrollEntry
+class ClsPayrollEntry extends ClsCookieFactory
 {
-    private $cookieArray;
-    private $postDataArray;
-    private $cookieOk;
-    private $cookieNotOkText;
-    private $weeks;
-    private $years;
     private $weekSelected;
     private $yearSelected;
     private $payrollData;
     private $dataLayer;
-    private $utility;
-
-    /**
-     * ClsPayrollEntry constructor.
-     * @param $cookieArray
-     * @param $postDataArray
-     */
-    function __construct($cookieArray, $postDataArray)
-    {
-        $this->cookieArray = $cookieArray;
-        $this->postDataArray = $postDataArray;
-        $this->dataLayer = new ClsDataLayer();
-        $this->utility = new ClsUtility();
-    }
-
 
     /**
      * this function is the driver of the business logic processing for
@@ -40,12 +19,14 @@ class ClsPayrollEntry
      */
     function processPageData() {
 
-        $this->cookieOk = $this->utility->checkAuthCookie($this->cookieArray);
+        $this->dataLayer=new ClsDataLayer();
+
+        $this->cookieOk = $this->checkAuthCookie();
 
         if ($this->cookieOk == 1) {
 
-            $this->weeks = $this->utility->getWeeks();
-            $this->years = $this->utility->getYears();
+            $this->weeks = $this->getWeeks();
+            $this->years = $this->getYears();
 
             $this->processPostData();
 
@@ -53,51 +34,17 @@ class ClsPayrollEntry
 
         }
         else {
-            $this->cookieNotOkText = $this->utility->getCookieNotOkText();
+            $this->cookieNotOkText = $this->getCookieNotOkText();
         }
 
     }
 
-    // class field getters
 
-    /**
-     * @return mixed
-     */
-    function getWeeks() {
-        return $this->weeks;
-    }
-
-    /**
-     * @return mixed
-     */
-    function getYears() {
-        return $this->years;
-    }
-
-    /**
-     * @return mixed
-     */
     function getPayrollData() {
         return $this->payrollData;
     }
 
-    /**
-     * @return mixed
-     */
-    function getCookieOk() {
-        return $this->cookieOk;
-    }
 
-    /**
-     * @return mixed
-     */
-    function getCookieNotOkText() {
-        return $this->cookieNotOkText;
-    }
-
-    /**
-     * @return mixed
-     */
     function getWeekSelected() {
         return $this->weekSelected;
     }
@@ -109,18 +56,13 @@ class ClsPayrollEntry
         return $this->yearSelected;
     }
 
-    //end of class field getters
-
-    /**
-     * function that processes the data from the post array
-     */
     private function processPostData() {
 
         if (isset($this->postDataArray['week']) && isset($this->postDataArray['year']))
         {
 
-            $this->weekSelected = $this->utility->cleanse_input($this->postDataArray['week']);
-            $this->yearSelected = $this->utility->cleanse_input($this->postDataArray['year']);
+            $this->weekSelected = $this->cleanse_input($this->postDataArray['week']);
+            $this->yearSelected = $this->cleanse_input($this->postDataArray['year']);
         }
         else
         {
@@ -130,28 +72,14 @@ class ClsPayrollEntry
         }
 
         if (isset($this->postDataArray['updateenabled'])){
-            if ($this->utility->cleanse_input($this->postDataArray['updateenabled']) == "true") {
+            if ($this->cleanse_input($this->postDataArray['updateenabled']) == "true") {
                 $this->processInsertUpdatePayrollData();
             }
         }
 
     }
 
-    /**
-     * this function resets the expiry on the auth cookie.  It checks the class variable
-     * first to ensure validation has occurred.
-     */
-    function resetCookie() {
-        if ($this->cookieOk == 1) {
-            $this->utility->setCookie();
-        }
 
-    }
-
-    /**
-     * this function contains the logic that processes the hours worked
-     * post data for payroll
-     */
     private function processInsertUpdatePayrollData() {
 
         foreach ($this->postDataArray as $postField => $postValue) {
@@ -159,7 +87,7 @@ class ClsPayrollEntry
             $fieldSplit = explode("_",$postField);
 
             if ($fieldSplit[0] == "hoursworked") {
-                $postValue = $this->utility->cleanse_input($postValue);
+                $postValue = $this->cleanse_input($postValue);
                 $employeeId = $fieldSplit[1];
 
                 $updateFlag = 0;

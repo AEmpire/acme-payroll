@@ -1,19 +1,12 @@
 <?php
-require_once 'ClsDefault.php';
+require_once 'ClsMenu.php';
 
 
 $cookieOk = 0;
 
-$clsDefault = new ruanjian\ClsDefault($_COOKIE,$_POST);
+$clsDefault = new ruanjian\ClsMenu($_COOKIE,$_POST);
 
 $clsDefault->processPageData();
-
-$cookieOk = $clsDefault->getCookieOk();
-
-if ($cookieOk == 0) {
-    echo $clsDefault->getCookieNotOkText();
-    exit(0);
-}
 
 $weeks = $clsDefault->getWeeks();
 $years = $clsDefault->getYears();
@@ -68,7 +61,7 @@ $clsDefault->resetCookie();
         <option value="<?=$year?>"><?=$year?></option>
     <?php endforeach; ?>
 </select><input type="submit" name=".submit" value="Go" /></form><br><br>
-<form method="post" action="../ProcessLogout.php" enctype="multipart/form-data">
+<form method="get" action="../ProcessLogout.php">
     </select><input type="submit" name=".submit" value="Logout" /></form>
 </form>
 </body>

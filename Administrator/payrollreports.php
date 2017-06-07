@@ -12,13 +12,6 @@ $clsPayrollReports = new ruanjian\ClsPayrollReports($_COOKIE,$_GET);
 
 $clsPayrollReports->processPageData();
 
-$cookieOk = $clsPayrollReports->getCookieOk();
-
-if ($cookieOk == 0) {
-    echo $clsPayrollReports->getCookieNotOkText();
-    exit(0);
-}
-
 $weeks = $clsPayrollReports->getWeeks();
 $years = $clsPayrollReports->getYears();
 
@@ -44,7 +37,7 @@ $clsPayrollReports->resetCookie();
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
 <body>
-<p><a href="default.php">Return to Main Menu</a></p>
+<p><a href="menu.php">Return to Main Menu</a></p>
 <form method="get" action="payrollreports.php"><h2>
         Payroll Report for </h2>
     <b>Week:</b>

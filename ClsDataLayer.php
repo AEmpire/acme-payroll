@@ -47,26 +47,26 @@ class ClsDataLayer
      * @param $inHourlyWage
      * @param $inExemptStatus
      */
-    function addEditEmployee($inEmployeeId, $inFirstName, $inLastName, $inHourlyWage, $inExemptStatus) {
+    function addEditEmployee($inEmployeeId, $inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax) {
 
         $this->dbConnect();
 
         if ($inEmployeeId == 0) {
 
-            $inputSql = "Insert Into Employees (employee_first_name, employee_last_name, hourly_wage, exempt_flag) 
-	                VALUES (?, ?, ?, ?);";
+            $inputSql = "Insert Into Employees (employee_first_name, employee_last_name, hourly_wage, exempt_flag,employee_type,standard_tax_deductions) 
+	                VALUES (?, ?, ?, ?,?,?);";
 
             $sth = $this->inDBH->prepare($inputSql);
-            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus));
+            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax));
         }
 
         else {
             $inputSql = "Update Employees set employee_first_name = ?, employee_last_name = ?, hourly_wage = ?, 
-	                                     exempt_flag = ? 
+	                                     exempt_flag = ? ,employee_type=?,standard_tax_deductions=?
 	                Where employee_id = ?";
 
             $sth = $this->inDBH->prepare($inputSql);
-            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus, $inEmployeeId));
+            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax ,$inEmployeeId));
 
         }
 
@@ -80,7 +80,7 @@ class ClsDataLayer
 
         $this->dbConnect();
 
-        $inputSql = "select employee_id,employee_first_name, employee_last_name, hourly_wage, exempt_flag from Employees
+        $inputSql = "select employee_id,employee_first_name, employee_last_name, hourly_wage, exempt_flag ,employee_type,standard_tax_deductions from Employees
 	                order by employee_id";
 
         $sth = $this->inDBH->prepare($inputSql);
@@ -89,6 +89,13 @@ class ClsDataLayer
         $result = $sth->fetchAll();
 
         return $result;
+    }
+
+    function getEmployee($id){
+        $inputSql="select employee_first_name, employee_last_name, hourly_wage, exempt_flag ,employee_type,standard_tax_deductions from Employees WHERE employee_id=$id";
+        $sth=$this->inDBH->prepare($inputSql);
+        $sth->execute();
+        return $sth->fetchAll();
     }
 
     function deleteEmployees($rowid){
@@ -107,19 +114,31 @@ class ClsDataLayer
      * @param $login_pwd
      * @return int
      */
-    function checkLogin($login_name, $login_pwd) {
+    function checkLogin($login_name, $login_pwd,$login_type) {
 
         $this->dbConnect();
+        if ($login_type=='admin'){
+            $inputSql = 'SELECT 1  FROM Users where user_name = ? and user_pwd = ?';
 
-        $inputSql = 'SELECT user_type  FROM Users where user_name = ? and user_pwd = ?';
+            $sth = $this->inDBH->prepare($inputSql);
 
-        $sth = $this->inDBH->prepare($inputSql);
+            $sth->execute(Array($login_name,$login_pwd));
 
-        $sth->execute(Array($login_name,$login_pwd));
+            $login_check = $sth->fetchColumn();
 
-        $login_check = $sth->fetchColumn();
+            return $login_check;
+        }
+       else{
+           $inputSql = 'SELECT employee_type  FROM employees where employee_id = ? and pwd = ?';
 
-        return $login_check;
+           $sth = $this->inDBH->prepare($inputSql);
+
+           $sth->execute(Array($login_name,$login_pwd));
+
+           $login_check = $sth->fetchColumn();
+
+           return $login_check;
+       }
     }
 
     /**
@@ -203,4 +222,8 @@ class ClsDataLayer
     }
 
 
+
+    function addEditPurchaseOrder(){
+
+    }
 }
