@@ -9,23 +9,20 @@
     <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
+	<link rel="stylesheet" href="css/LoginStyle.css" media="screen" type="text/css" />
 </head>
 <body>
-
-<h1>Welcome to Acme Payroll.</h1>
-	<p><h2>Please login.</h2>
+<h1 align="center">Welcome to Acme Payroll.</h1>
+	<p><h2 align="center">Please login.</h2>
 
 <Form Action="ProcessLogin.php" METHOD="get">
 	<p>
-	Username:
-		<INPUT TYPE="text" NAME="username" SIZE=40>
+		<INPUT TYPE="text" NAME="username" class="name" placeholder="username" SIZE=20>
 	<br>
-	Password:
-		<INPUT TYPE="password" NAME="password" SIZE=20>
+		<INPUT TYPE="password" NAME="password" class="name" placeholder="password" SIZE=20>
 		<br>
-		请选择用户类型:
-		<select name="type">
+		:
+		<select name="type" >
 			<option value="employee">employee</option>
 			<option value="admin">admin</option>
 		</select><br/>
