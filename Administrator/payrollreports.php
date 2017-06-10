@@ -7,20 +7,20 @@ require_once 'ClsPayrollReports.php';
  * Time: 9:18 PM
  */
 
+session_start();
 
 $clsPayrollReports = new ruanjian\ClsPayrollReports($_COOKIE,$_GET);
 
 $clsPayrollReports->processPageData();
 
-$weeks = $clsPayrollReports->getWeeks();
-$years = $clsPayrollReports->getYears();
+$totalHours=$clsPayrollReports->getTotalHours();
 
-$weekSelected = $clsPayrollReports->getWeekSelected();
-$yearSelected = $clsPayrollReports->getYearSelected();
-
-$payrollDataCalculated = $clsPayrollReports->getPayrollDataCalculated();
+$totalPayroll=$clsPayrollReports->getPayrollData();
 
 $clsPayrollReports->resetCookie();
+
+echo $totalPayroll;
+echo $totalHours;
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -38,59 +38,6 @@ $clsPayrollReports->resetCookie();
 </head>
 <body>
 <p><a href="menu.php">Return to Main Menu</a></p>
-<form method="get" action="payrollreports.php"><h2>
-        Payroll Report for </h2>
-    <b>Week:</b>
-    <label>
-        <select name="week">
 
-            <?php foreach ($weeks as $week): ?>
-            <option
-            <?=$weekSelected == $week ? 'selected="selected"' : '';?> value="<?=$week;?>"><?=$week;?></option>
-            <?php endforeach; ?>
-
-        </select>
-    </label><b> and Year: </b>
-
-    <label>
-        <select name="year">
-
-            <?php foreach ($years as $year): ?>
-            <option
-            <?=$yearSelected == $year ? 'selected="selected"' : '';?> value="<?=$year;?>"><?=$year;?></option>
-            <?php endforeach; ?>
-
-        </select>
-    </label>
-    <input type="submit" name=".submit" value="Run Different Report" />
-</form><br />
-
-<TABLE border='1' width='100%'><tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Hours</th>
-        <th>Wage</th>
-        <th>Exempt</th>
-        <th>Base Pay</th>
-        <th>Overtime Pay</th>
-        <th>Gross Pay</th>
-    </tr>
-
-    <?php foreach ($payrollDataCalculated as $payrollDatumCalculated): ?>
-
-    <tr id="<?=$payrollDatumCalculated[0];?>">
-        <td><?=$payrollDatumCalculated[1];?></td>
-        <td><?=$payrollDatumCalculated[2];?></td>
-        <td><?=number_format($payrollDatumCalculated[3],2);?></td>
-        <td><?=$payrollDatumCalculated[4] == '' ? '' : '$' . number_format($payrollDatumCalculated[4],2);?></td>
-        <td><?=$payrollDatumCalculated[5] == 1 ? 'Yes' : 'No';?></td>
-        <td><?='$' . number_format($payrollDatumCalculated[6],2);?></td>
-        <td><?='$' . number_format($payrollDatumCalculated[7],2);?></td>
-        <td><?='$' . number_format($payrollDatumCalculated[8],2);?></td>
-    </tr>
-
-    <?php endforeach; ?>
-
-</TABLE>
 </body>
 </html>

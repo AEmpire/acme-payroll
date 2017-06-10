@@ -15,7 +15,9 @@ class ClsEmployeeReport extends ClsCookieFactory
 
     private $clsDataLayer;
 
+    private $timeCardData;
 
+    private $employeePayrollData;
 
     function processPageData() {
 
@@ -25,14 +27,21 @@ class ClsEmployeeReport extends ClsCookieFactory
 
         if ($this->cookieOk == 1) {
 
-            $this->weeks = $this->getWeeks();
-            $this->years = $this->getYears();
+            $this->timeCardData=$this->clsDataLayer->getTimeCard($_SESSION['id']);
+
+            $this->employeePayrollData=$this->clsDataLayer->getEmployeePayrollData($_SESSION['id'],$_SESSION['type']);
 
         }
         else {
             $this->cookieNotOkText = $this->getCookieNotOkText();
         }
     }
+
+    function getTotalHours($firstdate,$lastdata){
+
+    }
+
+
 
 
 }

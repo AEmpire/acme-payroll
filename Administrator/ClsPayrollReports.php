@@ -7,144 +7,110 @@ require_once '../ClsDataLayer.php';
 
 class ClsPayrollReports extends ClsCookieFactory
 {
-    private $weekSelected;
-    private $yearSelected;
-    private $payrollDataCalculated;
-    private $dataLayer;
+    private $clsDataLayer;
 
-    /**
-     * this function drives the business logic processing for the payroll reports page
-     */
+    private $timeCardData;
+
+    private $employeePayrollData;
+
+    private $purchaseOrderData;
+
     function processPageData() {
 
-        $this->dataLayer=new ClsDataLayer();
+        $this->clsDataLayer=new ClsDataLayer();
 
         $this->cookieOk = $this->checkAuthCookie();
 
+        $id=$this->postDataArray['id'];
+        $type=$this->clsDataLayer->getEmployee($id)[0]['employee_type'];
         if ($this->cookieOk == 1) {
 
-            $this->weeks = $this->getWeeks();
-            $this->years = $this->getYears();
+            $this->timeCardData=$this->clsDataLayer->getTimeCard($id);
 
-            $this->processPostData();
+            $this->employeePayrollData=$this->clsDataLayer->getEmployeePayrollData($id,$type);
 
-            $this->payrollDataCalculated = $this->generatePayrollDataCalculated();
-
+            $this->purchaseOrderData=$this->clsDataLayer->getPurchaseOrder($id);
         }
         else {
             $this->cookieNotOkText = $this->getCookieNotOkText();
         }
-
     }
 
-    function getPayrollDataCalculated() {
-        return $this->payrollDataCalculated;
-    }
+    function getTotalHours(){
 
-    function getWeekSelected() {
-        return $this->weekSelected;
-    }
+        $firstdate=$this->postDataArray['firstdate'];
 
-    /**
-     * @return mixed
-     */
-    function getYearSelected() {
-        return $this->yearSelected;
-    }
+        $lastdate=$this->postDataArray['lastdate'];
 
-    // end getters
+        $totalHours=0;
 
-    /**
-     * function that processes the data from the post array
-     */
-    private function processPostData() {
-
-        if (isset($this->postDataArray['week']) && isset($this->postDataArray['year']))
-        {
-
-            $this->weekSelected = $this->cleanse_input($this->postDataArray['week']);
-            $this->yearSelected = $this->cleanse_input($this->postDataArray['year']);
-        }
-        else
-        {
-            $this->weekSelected = $this->weeks[0];
-            $this->yearSelected = $this->years[0];
+        foreach ($this->timeCardData as $cardDatum){
+            if ($cardDatum['date']>=$firstdate&&$cardDatum['date']<=$lastdate&&$cardDatum['status']){
+                $totalHours+=$cardDatum['time_worked'];
+            }
+            return $totalHours;
         }
     }
 
-    private function generatePayrollDataCalculated() {
+    function getPayrollData(){
+        $totalPayroll=0;
+        $firstdate=$this->postDataArray['firstdate'];
 
-        $employeeCount = 0;
-        $totalHoursWorked = 0.0;
-        $totalBasePay = 0.0;
-        $totalOvertimePay = 0.0;
-        $totalGrossPay = 0.0;
+        $lastdate=$this->postDataArray['lastdate'];
 
-        $payrollData = $this->dataLayer->getPayrollData($this->weekSelected, $this->yearSelected);
+        $id=$this->postDataArray['id'];
+        $type=$this->clsDataLayer->getEmployee($id)[0]['employee_type'];
 
-        $payrollDataCalculated= [];
-
-        $index = 0;
-
-        foreach ($payrollData as $payrolldatum) {
-
-            $hoursWorked = $payrolldatum[3];
-            $hourlyWage = $payrolldatum[4];
-            $exemptFlag = $payrolldatum[5] == 0 ? 'N' : 'Y';
-
-            $weeklyPay = $this->calculateWeeklyPay($hoursWorked, $hourlyWage, $exemptFlag);
-
-            $payrollDataCalculated[$index] = array_merge($payrolldatum,$weeklyPay);
-
-            $employeeCount += 1;
-            $totalHoursWorked += $hoursWorked;
-            $totalBasePay += $weeklyPay[0];
-            $totalOvertimePay += $weeklyPay[1];
-            $totalGrossPay += $weeklyPay[2];
-
-            $index++;
+        if ($type=='hourly'){
+            $hourlimit=$this->employeePayrollData[0]['hour_limit'];
+            $hourlywage=$this->employeePayrollData[0]['hourly_wage'];
+            $tax=$this->employeePayrollData[0]['standard_tax_deductions'];
+            foreach ($this->timeCardData as $cardDatum){
+                if ($cardDatum['date']>=$firstdate&&$cardDatum['date']<=$lastdate&&$cardDatum['status']){
+                    if ($cardDatum['time_worked']>$hourlimit){
+                        $payroll=($hourlimit*$hourlywage+($cardDatum['time_worked']-$hourlimit)*$hourlywage)*(1-$tax);
+                        $totalPayroll+=$payroll;
+                    }
+                    else{
+                        $payroll=$cardDatum['time_worked']*$hourlywage*(1-$tax);
+                        $totalPayroll+=$payroll;
+                    }
+                }
+            }
+            return $totalPayroll;
         }
+        elseif ($type=='commision'){
+            $tax=$this->employeePayrollData[0]['standard_tax_deductions'];
+            $commision=$this->employeePayrollData[0]['commission_rate'];
+            $salary=$this->employeePayrollData[0]['salary'];
+            $totalSales=$this->getTotalSale();
+            $mouth=date('n', strtotime($lastdate))-date('n', strtotime($firstdate));
 
-        $totalPayrollData = ["","TOTALS","",$totalHoursWorked,"","",$totalBasePay,$totalOvertimePay,$totalGrossPay];
+            $totalPayroll=($mouth*$salary+$totalSales*$commision)*(1-$tax);
 
-        $averagePayrollData = ["", "AVERAGES", "", $totalHoursWorked/$employeeCount, "", "",
-            $totalBasePay/$employeeCount,
-            $totalOvertimePay/$employeeCount,
-            $totalGrossPay/$employeeCount];
+            return $totalPayroll;
+        }
+        else{
+            $tax=$this->employeePayrollData[0]['standard_tax_deductions'];
+            $salary=$this->employeePayrollData[0]['salary'];
+            $mouth=date('n', strtotime($lastdate))-date('n', strtotime($firstdate));
 
-        array_push($payrollDataCalculated,$totalPayrollData, $averagePayrollData);
+            $totalPayroll=$mouth*$salary*(1-$tax);
 
-        return $payrollDataCalculated;
+            return $totalPayroll;
+        }
     }
 
-    /**
-     * function that contains the business logic for calculating weekly pay
-     * based on hours/wage/exempt status
-     * @param $hoursWorked
-     * @param $hourlyWage
-     * @param $exemptFlag
-     * @return array
-     */
-    private function calculateWeeklyPay($hoursWorked, $hourlyWage, $exemptFlag) {
+    private function getTotalSale(){
+        $firstdate=$this->postDataArray['firstdate'];
 
-    $baseHours = 40.0;
-    $otMultiplier = 1.5;
+        $lastdate=$this->postDataArray['lastdate'];
 
-    $basePay = round(($hoursWorked > 40 ? $baseHours : $hoursWorked) * $hourlyWage, 2);
-
-    $overtimePay = 0.0;
-
-    if ($exemptFlag == 'N' and $hoursWorked > 40) {
-
-        $overtimePay = round(($hoursWorked - $baseHours) * ($hourlyWage * $otMultiplier), 2);
-
-    }
-
-    $grossPay = ($basePay) + ($overtimePay);
-
-    $weekPay = [$basePay,$overtimePay,$grossPay];
-
-    return $weekPay;
-
+        $totalSales=0;
+        foreach ($this->purchaseOrderData as $purchaseOrderDatum){
+            if ($purchaseOrderDatum['status']=='0'&&$purchaseOrderDatum['date']>=$firstdate&&$purchaseOrderDatum['date']<=$lastdate){
+                $totalSales+=$purchaseOrderDatum['amount_of_money'];
+            }
+        }
     }
 }

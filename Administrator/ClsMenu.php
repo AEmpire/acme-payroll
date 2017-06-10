@@ -1,34 +1,31 @@
 <?php
 
 namespace ruanjian;
+require_once '../ClsDataLayer.php';
 require_once '../Factory/ClsCookieFactory.php';
 
 class ClsMenu extends ClsCookieFactory
 {
+    private $employeeData;
+    private $dataLayer;
 
     function processPageData() {
+
+        $this->dataLayer=new ClsDataLayer();
         $this->cookieOk = $this->checkAuthCookie();
 
         if ($this->cookieOk == 1) {
-
-            $this->weeks = $this->getWeeks();
-            $this->years = $this->getYears();
-
+            $this->employeeData = $this->dataLayer->getEmployees();
         }
         else {
             $this->cookieNotOkText = $this->getCookieNotOkText();
         }
+
     }
 
-    function getWeeks() {
-        return $this->weeks;
+    function getEmployees(){
+        return $this->employeeData;
     }
 
-    /**
-     * @return mixed
-     */
-    function getYears() {
-        return $this->years;
-    }
 
 }

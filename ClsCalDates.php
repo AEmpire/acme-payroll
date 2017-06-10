@@ -15,6 +15,6 @@ class ClsCalDates
     {
         $firstday = date('Y-m-01', strtotime($date));
         $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
-        return $lastday - $firstday + 1;
+        return $lastday - $date;
     }
 }

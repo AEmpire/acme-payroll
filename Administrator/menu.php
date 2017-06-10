@@ -8,9 +8,7 @@ $clsDefault = new ruanjian\ClsMenu($_COOKIE,$_POST);
 
 $clsDefault->processPageData();
 
-$weeks = $clsDefault->getWeeks();
-$years = $clsDefault->getYears();
-
+$employeesData=$clsDefault->getEmployees();
 $clsDefault->resetCookie();
 
 ?>
@@ -31,36 +29,25 @@ $clsDefault->resetCookie();
 <p>
 	<a href="addeditemployees.php">Add New or Edit Existing Employee</a>
 </p>
-<form method="get" action="payrollentry.php" ><b>
-	Enter Payroll Info for Week:
-</b>
-<select name="week" >
-    <?php foreach ($weeks as $week): ?>
-    <option value="<?=$week?>"><?=$week?></option>
-    <?php endforeach; ?>
-</select><b>
-	 and Year:
-</b>
-<select name="year" >
-    <?php foreach ($years as $year): ?>
-    <option value="<?=$year?>"><?=$year?></option>
-    <?php endforeach; ?>
-</select><input type="submit" name=".submit" value="Go" /></form><br />
-<form method="get" action="payrollreports.php" ><b>
-	Generate Payroll Reports for Week:
-</b>
-<select name="week" >
-    <?php foreach ($weeks as $week): ?>
-    <option value="<?=$week?>"><?=$week?></option>
-    <?php endforeach; ?>
-</select><b>
-	 and Year:
-</b>
-<select name="year" >
-    <?php foreach ($years as $year): ?>
-        <option value="<?=$year?>"><?=$year?></option>
-    <?php endforeach; ?>
-</select><input type="submit" name=".submit" value="Go" /></form><br><br>
+<form method="get" action="payrollreports.php" >
+    <b>
+	Generate Payroll Reports
+</b><br/>
+    Report type:
+<select name="reporttype" >
+    <option value="total hours">total hours</option>
+    <option value="pay year-to-date">pay year-to-date</option>
+</select><br/>
+	 from
+<input name="firstdate" type="date"> to <input name="lastdate" type="date"><br/>
+    of employee:
+    <select name="id">
+        <?php foreach ($employeesData as $datum):?>
+        <option value="<?=$datum['employee_id']?>"><?=$datum['employee_id']?></option>
+        <?php endforeach;?>
+    </select>
+
+<input type="submit" name=".submit" value="Go" /></form><br><br>
 <form method="get" action="../ProcessLogout.php">
     </select><input type="submit" name=".submit" value="Logout" /></form>
 </form>

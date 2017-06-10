@@ -43,7 +43,7 @@
     </column>
     <column id="19" parent="9" name="commission_rate">
       <Position>5</Position>
-      <DataType>int(20)|0</DataType>
+      <DataType>float|0</DataType>
     </column>
     <column id="20" parent="9" name="salary">
       <Position>6</Position>

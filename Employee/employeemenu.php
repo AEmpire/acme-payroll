@@ -37,4 +37,6 @@ $clsMenuEmp->resetCookie();
 <?php if ($employeeData[0][4]=='commision'):?>
 <a href="purchaseorder.php">Purchase Order</a>
 <?php endif; ?>
+<form method="get" action="../ProcessLogout.php">
+    </select><input type="submit" name=".submit" value="Logout" /></form>
 </body>

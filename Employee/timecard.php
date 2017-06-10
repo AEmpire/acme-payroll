@@ -1,5 +1,6 @@
 <?php
 require_once 'ClsTimeCard.php';
+require_once '../ClsCalDates.php';
 /**
  * Created by PhpStorm.
  * User: admin
@@ -15,10 +16,8 @@ $clsTimeCard = new ruanjian\ClsTimeCard($_COOKIE,$_GET);
 $clsTimeCard->processPageData();
 
 $projectData=$clsTimeCard->getProjectData();
-print_r($projectData);
 $timeCard=$clsTimeCard->getTimeCardData();
-print_r($timeCard);
-echo date('D',strtotime(date('Y-m-d')));
+
 $clsTimeCard->resetCookie();
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
@@ -34,6 +33,9 @@ $clsTimeCard->resetCookie();
     <link rel="stylesheet" href="css/LoginStyle.css" media="screen" type="text/css" />
 </head>
 <body>
+<p>
+    <a href="employeemenu.php">Return to Main Menu</a>
+</p>
 <h1 align="center">Time Card</h1>
 <TABLE border='1' width='100%'>
     <tr>

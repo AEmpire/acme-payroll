@@ -111,6 +111,50 @@ class ClsDataLayer
        }
     }
 
+    function getEmployeePayrollData($id,$type){
+        $this->dbConnect();
+
+        if ($type=='hourly'){
+            $inputSql="select hour_limit,hourly_wage,standard_tax_deductions,exempt_flag from employees WHERE employee_id=?";
+
+            $sth = $this->inDBH->prepare($inputSql);
+
+            if ($sth->execute(Array($id))){
+                $EmployeePayroll=$sth->fetchAll();
+            }
+            else{
+                $EmployeePayroll=null;
+            }
+            return $EmployeePayroll;
+        }
+        elseif ($type='commision'){
+            $inputSql="select commission_rate,salary,standard_tax_deductions from employees WHERE employee_id=?";
+
+            $sth = $this->inDBH->prepare($inputSql);
+
+            if ($sth->execute(Array($id))){
+                $EmployeePayroll=$sth->fetchAll();
+            }
+            else{
+                $EmployeePayroll=null;
+            }
+            return $EmployeePayroll;
+        }
+        else{
+            $inputSql="select salary,standard_tax_deductions from employees WHERE employee_id=?";
+
+            $sth = $this->inDBH->prepare($inputSql);
+
+            if ($sth->execute(Array($id))){
+                $EmployeePayroll=$sth->fetchAll();
+            }
+            else{
+                $EmployeePayroll=null;
+            }
+            return $EmployeePayroll;
+        }
+    }
+
     function checkForPayrollData($inWeek, $inYear, $inEmployeeId) {
 
         $this->dbConnect();
@@ -196,7 +240,7 @@ class ClsDataLayer
         return $sth->fetchAll();
     }
 
-    function getTimeCard($employeeId,$date){
+    function getTimeCard($employeeId){
         $this->dbConnect();
 
         $inputSql="select time_worked,status,charge_num,date from timecard WHERE employee_id=$employeeId ORDER BY date DESC";
@@ -227,7 +271,7 @@ class ClsDataLayer
             }
         }
         else{
-            for ($i=0;$i<ClsCalDates::getMonthDay($date);$i++){
+            for ($i=0;$i<(date('t')-date('j')+1);$i++){
                 $sth->execute(Array($date++,$employeeId));
             }
         }
