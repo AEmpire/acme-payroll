@@ -11,11 +11,8 @@ session_start();
 $cookieOk = 0;
 
 $clsMenuEmp = new ruanjian\ClsMenuEmp($_COOKIE,$_POST);
-
-$employeeData = $clsMenuEmp->getEmployeeData($_SESSION['id']);
-print_r($employeeData);
 $clsMenuEmp->processPageData();
-
+$employeeData = $clsMenuEmp->getEmployeeData();
 $clsMenuEmp->resetCookie();
 
 ?>

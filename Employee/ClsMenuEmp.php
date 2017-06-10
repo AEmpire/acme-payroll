@@ -27,7 +27,7 @@ class ClsMenuEmp extends ClsCookieFactory
         }
     }
 
-    function getEmployeeData($employee_id){
+    function getEmployeeData(){
         return $this->employeeData;
     }
 }

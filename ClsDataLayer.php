@@ -2,26 +2,17 @@
 
 namespace ruanjian;
 use PDO;
-
+require_once "ClsCalDates.php";
 
 class ClsDataLayer
 {
     private $inDBH;
 
-
-    /**
-     * ClsDataLayer constructor.
-     */
     function __construct() {
         $this->dbConnect();
     }
 
-
-    /**
-     * this function establishes the connection object
-     */
     private function dbConnect() {
-
 
         if ($this->inDBH === null) {
             try {
@@ -39,31 +30,20 @@ class ClsDataLayer
         }
     }
 
-    /**
-     * this function will add or update employee data for a given employee
-     * @param $inEmployeeId
-     * @param $inFirstName
-     * @param $inLastName
-     * @param $inHourlyWage
-     * @param $inExemptStatus
-     */
     function addEditEmployee($inEmployeeId, $inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax) {
 
         $this->dbConnect();
 
         if ($inEmployeeId == 0) {
 
-            $inputSql = "Insert Into Employees (employee_first_name, employee_last_name, hourly_wage, exempt_flag,employee_type,standard_tax_deductions) 
-	                VALUES (?, ?, ?, ?,?,?);";
+            $inputSql = "Insert Into Employees (employee_first_name, employee_last_name, hourly_wage, exempt_flag,employee_type,standard_tax_deductions)  VALUES (?, ?, ?, ?,?,?);";
 
             $sth = $this->inDBH->prepare($inputSql);
             $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax));
         }
 
         else {
-            $inputSql = "Update Employees set employee_first_name = ?, employee_last_name = ?, hourly_wage = ?, 
-	                                     exempt_flag = ? ,employee_type=?,standard_tax_deductions=?
-	                Where employee_id = ?";
+            $inputSql = "Update Employees set employee_first_name = ?, employee_last_name = ?, hourly_wage = ?, exempt_flag = ? ,employee_type=?,standard_tax_deductions=?Where employee_id = ?";
 
             $sth = $this->inDBH->prepare($inputSql);
             $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax ,$inEmployeeId));
@@ -72,10 +52,6 @@ class ClsDataLayer
 
     }
 
-    /**
-     * this function gets all of the employee data from the database
-     * @return mixed
-     */
     function getEmployees(){
 
         $this->dbConnect();
@@ -107,13 +83,7 @@ class ClsDataLayer
         $sth=$this->inDBH->prepare($inputSql);
         $sth->execute();
     }
-    /**
-     * this function checks for a matching value in the Users table
-     * for the login and password provided, returning 1 if a match is found
-     * @param $login_name
-     * @param $login_pwd
-     * @return int
-     */
+
     function checkLogin($login_name, $login_pwd,$login_type) {
 
         $this->dbConnect();
@@ -141,40 +111,6 @@ class ClsDataLayer
        }
     }
 
-    /**
-     * this function gets the payroll data set for a given week and year
-     * @param $inWeek
-     * @param $inYear
-     * @return mixed
-     */
-    function getPayrollData($inWeek, $inYear) {
-
-        $this->dbConnect();
-
-        $inputSql = "select e.employee_id,e.employee_first_name, e.employee_last_name, coalesce(p.hours_worked,0) as hours_worked,
-                    e.hourly_wage, e.exempt_flag
-	                from Employees e
-	                left join PayrollData p on e.employee_id = p.employee_id
-					         and  p.week_number = ? and p.year = ?
-	                order by e.employee_id";
-
-        $sth = $this->inDBH->prepare($inputSql);
-
-        $sth->execute(Array($inWeek,$inYear));
-
-        $result = $sth->fetchAll();
-
-        return $result;
-    }
-
-    /**
-     * this function checks for the existence for payroll data for a given
-     * week, year and employee id
-     * @param $inWeek
-     * @param $inYear
-     * @param $inEmployeeId
-     * @return mixed
-     */
     function checkForPayrollData($inWeek, $inYear, $inEmployeeId) {
 
         $this->dbConnect();
@@ -192,15 +128,6 @@ class ClsDataLayer
 
     }
 
-    /**
-     * this function creates or updates hours worked payroll data for a given week/year/employee
-     * depending on the update directive provided
-     * @param $updateFlag
-     * @param $week
-     * @param $year
-     * @param $employeeId
-     * @param $hoursWorked
-     */
     function insertUpdatePayrollData($updateFlag, $week, $year, $employeeId, $hoursWorked) {
 
         $this->dbConnect();
@@ -221,9 +148,88 @@ class ClsDataLayer
 
     }
 
+    function getPurchaseOrder($inEmployeeId){
+        $inputSql="select id,amount_of_money, date, employee_id,name,status from purchase_order WHERE employee_id=$inEmployeeId ORDER BY id";
+        $sth=$this->inDBH->prepare($inputSql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
 
+    function deletePurchaseOrder($rowid){
+        $this->dbConnect();
+        $inputSql="delete from purchase_order WHERE id = $rowid";
+        $sth=$this->inDBH->prepare($inputSql);
+        $sth->execute();
+    }
 
-    function addEditPurchaseOrder(){
+    function addEditPurchaseOrder($inOrderId,$inMoney,$inDate,$inEmployeeId,$inStatus,$name){
+        $this->dbConnect();
 
+        if ($inOrderId == 0) {
+
+            $inputSql = "Insert Into purchase_order (amount_of_money, date, employee_id,name,status) 
+	                VALUES (?, ?, ?, ?,?);";
+
+            $sth = $this->inDBH->prepare($inputSql);
+            $sth->execute(Array($inMoney,$inDate,$inEmployeeId,$name,$inStatus));
+        }
+
+        else {
+            $inputSql = "Update purchase_order set amount_of_money = ?, date = ?,employee_id=?, status=?,name=?
+	                Where id = ?";
+
+            $sth = $this->inDBH->prepare($inputSql);
+            $sth->execute(Array($inMoney,$inDate,$inEmployeeId,$inStatus,$name,$inOrderId));
+
+        }
+    }
+
+    function getProject(){
+        $this->dbConnect();
+
+        $inputSql="select charge_num,project from project_management_database";
+
+        $sth=$this->inDBH->prepare($inputSql);
+
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+
+    function getTimeCard($employeeId,$date){
+        $this->dbConnect();
+
+        $inputSql="select time_worked,status,charge_num,date from timecard WHERE employee_id=$employeeId ORDER BY date DESC";
+
+        $sth=$this->inDBH->prepare($inputSql);
+
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+
+    function submitTimeCard($charge_num,$time_worked,$employeeId){
+        $this->dbConnect();
+        $inputSql="Update timecard set charge_num = ?, time_worked = ?,status='submitted' Where employee_id = ? and date=?";
+
+        $sth=$this->inDBH->prepare($inputSql);
+
+        $sth->execute(Array($charge_num,$time_worked,$employeeId,date('Y-m-d')));
+    }
+
+    function createTimeCard($employeeId,$employeeType,$date){
+        $this->dbConnect();
+        $inputSql="insert into timecard (date,employee_id) VALUE (?,?)";
+        $sth=$this->inDBH->prepare($inputSql);
+        if ($employeeType=='hourly'){
+            for ($i=0;date('D',strtotime($date))!='Sat';$i++){
+                $sth->execute(Array($date++,$employeeId));
+            }
+        }
+        else{
+            for ($i=0;$i<ClsCalDates::getMonthDay($date);$i++){
+                $sth->execute(Array($date++,$employeeId));
+            }
+        }
     }
 }

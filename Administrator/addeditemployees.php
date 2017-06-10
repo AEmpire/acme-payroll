@@ -139,9 +139,10 @@ require_once 'ClsAddEditEmployees.php';
     <?php foreach ($employeeData as $employeeDatum):  ?>
     <tr id="<?=$employeeDatum[0];?>">
         <td><input type="button"  name="Edit" value="Edit" onclick="editrec(<?=$employeeDatum[0];?>,<?=$employeeDatum[6];?>)" />
-            <input type="submit" name="submit" value="delete">
+
             <form method="get" action="addeditemployees.php" id="addeditemployee">
                 <input type="hidden" name="rowid" value="<?=$employeeDatum[0];?>">
+                <input type="submit" name="submit" value="delete">
             </form>
         </td>
         <td><?=$employeeDatum[1];?></td> <td><?=$employeeDatum[2];?></td> <td><?=$employeeDatum[3];?></td>

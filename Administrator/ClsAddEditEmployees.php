@@ -38,12 +38,13 @@ class ClsAddEditEmployees extends ClsCookieFactory
     }
 
     private function processPostData() {
-        if ($this->postDataArray['submit']=='delete') {
-            $this->deleteEmployeeData($this->postDataArray['rowid']);
+        if (isset($this->postDataArray['submit'])) {
+            if ($this->postDataArray['submit'] == 'delete') {
+                $this->deleteEmployeeData($this->postDataArray['rowid']);
+            }
         }
         else {
             if (isset($this->postDataArray['employeeid'])) {
-
                 $employeeId = $this->cleanse_input($this->postDataArray['employeeid']);
                 $firstName = $this->cleanse_input($this->postDataArray['firstname']);
                 $lastName = $this->cleanse_input($this->postDataArray['lastname']);
