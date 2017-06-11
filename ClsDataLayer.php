@@ -290,4 +290,34 @@ class ClsDataLayer
             }
         }
     }
+
+    function editPaymentMethod($id,$method){
+        $this->dbConnect();
+
+        $inputSql="Update employees set payment_method=? Where employee_id = ?";
+
+        $sth=$this->inDBH->prepare($inputSql);
+
+        $sth->execute(Array($method,$id));
+    }
+
+    function editMail($id,$mail){
+        $this->dbConnect();
+
+        $inputSql="Update employees set mail_address=? Where employee_id = ?";
+
+        $sth=$this->inDBH->prepare($inputSql);
+
+        $sth->execute(Array($mail,$id));
+    }
+
+    function editBank($name,$num,$id){
+        $this->dbConnect();
+
+        $inputSql="Update employees set bank_name=?,account_num=? Where employee_id = ?";
+
+        $sth=$this->inDBH->prepare($inputSql);
+
+        $sth->execute(Array($name,$num,$id));
+    }
 }

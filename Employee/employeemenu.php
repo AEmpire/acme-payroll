@@ -36,7 +36,15 @@ $clsMenuEmp->resetCookie();
 <?php if ($employeeData[0][4]=='commision'):?>
 <a href="purchaseorder.php">Purchase Order</a>
 <?php endif; ?>
-
+<form action="selectpaymentmethod.php" method="get">
+    Please choose a payment method:
+    <select name="payment">
+        <option value="pick-up">Pick up</option>
+        <option value="mail">Mail</option>
+        <option value="direct-deposit">Direct deposit</option>
+    </select>
+    <input type="submit" name=".submit" value="Go" />
+</form>
 <form method="get" action="employeereport.php" >
     <b>
         Generate Payroll Reports
@@ -49,7 +57,6 @@ $clsMenuEmp->resetCookie();
     </select><br/>
     from
     <input name="firstdate" type="date"> to <input name="lastdate" type="date"><br/>
-
     <input type="submit" name=".submit" value="Go" /></form><br><br>
 <form method="get" action="../ProcessLogout.php">
     </select><input type="submit" name=".submit" value="Logout" /></form>
