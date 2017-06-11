@@ -71,7 +71,7 @@ require_once 'ClsAddEditEmployees.php';
 </head>
 <body>
 <p>
-    <a href="menu.php">Return to Main Menu</a>
+    <a align="center" href="menu.php">Return to Main Menu</a>
 </p>
 <h1>
     Add or Edit Employee

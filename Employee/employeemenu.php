@@ -33,10 +33,24 @@ $clsMenuEmp->resetCookie();
     Welcome <?=$employeeData[0][0];?>!
 </h1>
 <a href="timecard.php">timecard</a><br>
-<a href="employeereport.php">report</a><br>
 <?php if ($employeeData[0][4]=='commision'):?>
 <a href="purchaseorder.php">Purchase Order</a>
 <?php endif; ?>
+
+<form method="get" action="employeereport.php" >
+    <b>
+        Generate Payroll Reports
+    </b><br/>
+    Report type:
+    <select name="reporttype" >
+        <option value="total hours">total hours</option>
+        <option value="pay year-to-date">pay year-to-date</option>
+        <option value="vacation">vacation/sick leave</option>
+    </select><br/>
+    from
+    <input name="firstdate" type="date"> to <input name="lastdate" type="date"><br/>
+
+    <input type="submit" name=".submit" value="Go" /></form><br><br>
 <form method="get" action="../ProcessLogout.php">
     </select><input type="submit" name=".submit" value="Logout" /></form>
 </body>

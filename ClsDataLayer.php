@@ -79,7 +79,10 @@ class ClsDataLayer
         $inputSql="delete from employees WHERE employee_id = $rowid";
         $sth=$this->inDBH->prepare($inputSql);
         $sth->execute();
-        $inputSql="delete from payrolldata WHERE employee_id = $rowid";
+        $inputSql="delete from timecard WHERE employee_id = $rowid";
+        $sth=$this->inDBH->prepare($inputSql);
+        $sth->execute();
+        $inputSql="delete from purchase_order WHERE employee_id = $rowid";
         $sth=$this->inDBH->prepare($inputSql);
         $sth->execute();
     }
@@ -252,13 +255,24 @@ class ClsDataLayer
         return $sth->fetchAll();
     }
 
-    function submitTimeCard($charge_num,$time_worked,$employeeId){
+    function submitTimeCard($charge_num,$time_worked,$employeeId,$employeeType){
         $this->dbConnect();
-        $inputSql="Update timecard set charge_num = ?, time_worked = ?,status='submitted' Where employee_id = ? and date=?";
 
-        $sth=$this->inDBH->prepare($inputSql);
+        if ($employeeType=='commision'){
+            $inputSql="Update timecard set  time_worked = ?,status='submitted' Where employee_id = ? and date=?";
 
-        $sth->execute(Array($charge_num,$time_worked,$employeeId,date('Y-m-d')));
+            $sth=$this->inDBH->prepare($inputSql);
+
+            $sth->execute(Array($time_worked,$employeeId,date('Y-m-d')));
+        }
+        else{
+            $inputSql="Update timecard set charge_num = ?, time_worked = ?,status='submitted' Where employee_id = ? and date=?";
+
+            $sth=$this->inDBH->prepare($inputSql);
+
+            $sth->execute(Array($charge_num,$time_worked,$employeeId,date('Y-m-d')));
+        }
+
     }
 
     function createTimeCard($employeeId,$employeeType,$date){

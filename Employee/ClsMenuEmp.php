@@ -7,6 +7,7 @@ require_once '../ClsDataLayer.php';
 class ClsMenuEmp extends ClsCookieFactory
 {
     private $clsDataLayer;
+
     private $employeeData;
 
     /**
@@ -30,4 +31,6 @@ class ClsMenuEmp extends ClsCookieFactory
     function getEmployeeData(){
         return $this->employeeData;
     }
+
+
 }

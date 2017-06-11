@@ -40,23 +40,35 @@ class ClsPayrollReports extends ClsCookieFactory
 
         $firstdate=$this->postDataArray['firstdate'];
 
-        $lastdate=$this->postDataArray['lastdate'];
+        if ($this->postDataArray['lastdate']>date('Y/m/d')){
+            $lastdate=date('Y/m/d');
+        }
+        else{
+            $lastdate=$this->postDataArray['lastdate'];
+        }
 
         $totalHours=0;
 
         foreach ($this->timeCardData as $cardDatum){
-            if ($cardDatum['date']>=$firstdate&&$cardDatum['date']<=$lastdate&&$cardDatum['status']){
+            if ($cardDatum['date']>=$firstdate&&$cardDatum['date']<=$lastdate){
                 $totalHours+=$cardDatum['time_worked'];
             }
-            return $totalHours;
+
         }
+        return $totalHours;
     }
+
 
     function getPayrollData(){
         $totalPayroll=0;
         $firstdate=$this->postDataArray['firstdate'];
 
-        $lastdate=$this->postDataArray['lastdate'];
+        if ($this->postDataArray['lastdate']>date('Y/m/d')){
+            $lastdate=date('Y/m/d');
+        }
+        else{
+            $lastdate=$this->postDataArray['lastdate'];
+        }
 
         $id=$this->postDataArray['id'];
         $type=$this->clsDataLayer->getEmployee($id)[0]['employee_type'];
@@ -66,7 +78,7 @@ class ClsPayrollReports extends ClsCookieFactory
             $hourlywage=$this->employeePayrollData[0]['hourly_wage'];
             $tax=$this->employeePayrollData[0]['standard_tax_deductions'];
             foreach ($this->timeCardData as $cardDatum){
-                if ($cardDatum['date']>=$firstdate&&$cardDatum['date']<=$lastdate&&$cardDatum['status']){
+                if ($cardDatum['date']>=$firstdate&&$cardDatum['date']<=$lastdate){
                     if ($cardDatum['time_worked']>$hourlimit){
                         $payroll=($hourlimit*$hourlywage+($cardDatum['time_worked']-$hourlimit)*$hourlywage)*(1-$tax);
                         $totalPayroll+=$payroll;
@@ -104,13 +116,20 @@ class ClsPayrollReports extends ClsCookieFactory
     private function getTotalSale(){
         $firstdate=$this->postDataArray['firstdate'];
 
-        $lastdate=$this->postDataArray['lastdate'];
+        if ($this->postDataArray['lastdate']>date('Y/m/d')){
+            $lastdate=date('Y/m/d');
+        }
+        else{
+            $lastdate=$this->postDataArray['lastdate'];
+        }
 
         $totalSales=0;
         foreach ($this->purchaseOrderData as $purchaseOrderDatum){
-            if ($purchaseOrderDatum['status']=='0'&&$purchaseOrderDatum['date']>=$firstdate&&$purchaseOrderDatum['date']<=$lastdate){
+            if ($purchaseOrderDatum['date']>=$firstdate&&$purchaseOrderDatum['date']<=$lastdate){
                 $totalSales+=$purchaseOrderDatum['amount_of_money'];
             }
         }
+
+        return $totalSales;
     }
 }

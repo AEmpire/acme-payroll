@@ -59,18 +59,28 @@ $clsTimeCard->resetCookie();
 
         <td><?=$item[3];?></td>
         <form action="timecard.php" method="get">
+            <?php if ($_SESSION['type']!='commision'):?>
             <td><select name="Charge_num">
                     <?php foreach ($projectData as $projectDatum): ?>
                 <option value="<?=$projectDatum[0];?>"><?=$projectDatum[0];?></option>
                     <?php endforeach;?>
-                </select> </td> 
+                </select> </td>
+            <?php else:?>
+                <td><input name="Charge_num" type="hidden" value="">null</td>
+            <?php endif;?>
             <td><input type="text" name="timeworked"></td>
         <td><input type="submit" name="status" value="submitted"></td>
         </form>
     </tr>
     <?php else:?>
         <tr>
-            <td><?=$item[3];?></td> <td><?=$item[2];?></td> <td><?=$item[0];?></td>
+            <td><?=$item[3];?></td>
+            <?php if ($_SESSION['type']!='commision'):?>
+                <td><?=$item[2];?></td>
+            <?php else:?>
+                <td>null</td>
+            <?php endif;?>
+            <td><?=$item[0];?></td>
             <td><?=$item[1];?></td>
         </tr>
 <?php endif?>

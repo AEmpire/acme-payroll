@@ -17,6 +17,8 @@ $totalHours=$clsPayrollReports->getTotalHours();
 
 $totalPayroll=$clsPayrollReports->getPayrollData();
 
+
+
 $clsPayrollReports->resetCookie();
 
 echo $totalPayroll;
@@ -37,7 +39,45 @@ echo $totalHours;
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
 <body>
-<p><a href="menu.php">Return to Main Menu</a></p>
-
+<p><a align="center" href="menu.php">Return to Main Menu</a></p>
+<?php if ($_GET['reporttype']=='total hours'):?>
+    <table align="center" border="1" >
+        <tr>
+            <th>
+                Employee ID
+            </th>
+            <th>
+                Total Hours
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <?=$_SESSION['id']?>
+            </th>
+            <th>
+                <?=$totalHours?>
+            </th>
+        </tr>
+    </table>
+<?php else:?>
+    <table align="center" border="1" >
+        <tr>
+            <th>
+                Employee ID
+            </th>
+            <th>
+                Total Pay
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <?=$_SESSION['id']?>
+            </th>
+            <th>
+                <?=$totalPayroll?>
+            </th>
+        </tr>
+    </table>
+<?php endif;?>
 </body>
 </html>

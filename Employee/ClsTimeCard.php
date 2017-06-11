@@ -29,7 +29,7 @@ class ClsTimeCard extends ClsCookieFactory
                 $timeworked=$this->cleanse_input($this->postDataArray['timeworked']);
                 $charge_num=$this->cleanse_input($this->postDataArray['Charge_num']);
                 $status=$this->cleanse_input($this->postDataArray['status']);
-                $this->clsDataLayer->submitTimeCard($charge_num,$timeworked,$_SESSION['id']);
+                $this->clsDataLayer->submitTimeCard($charge_num,$timeworked,$_SESSION['id'],$_SESSION['type']);
             }
             $this->projectData=$this->clsDataLayer->getProject();
             $this->timeCardData=$this->clsDataLayer->getTimeCard($_SESSION['id']);

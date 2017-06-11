@@ -20,7 +20,7 @@ $clsDefault->resetCookie();
 <title>Main Menu</title>
 </head>
 <body>
-<h1>
+<h1 align="center">
 	Main Menu
 </h1>
 <p>
@@ -46,7 +46,6 @@ $clsDefault->resetCookie();
         <option value="<?=$datum['employee_id']?>"><?=$datum['employee_id']?></option>
         <?php endforeach;?>
     </select>
-
 <input type="submit" name=".submit" value="Go" /></form><br><br>
 <form method="get" action="../ProcessLogout.php">
     </select><input type="submit" name=".submit" value="Logout" /></form>
