@@ -21,8 +21,6 @@ $totalPayroll=$clsPayrollReports->getPayrollData();
 
 $clsPayrollReports->resetCookie();
 
-echo $totalPayroll;
-echo $totalHours;
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -52,7 +50,7 @@ echo $totalHours;
         </tr>
         <tr>
             <th>
-                <?=$_SESSION['id']?>
+                <?=$_GET['id']?>
             </th>
             <th>
                 <?=$totalHours?>

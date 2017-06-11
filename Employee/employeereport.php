@@ -23,7 +23,7 @@ $projectData=$clsEmployeeReport->getProjectData();
 
 $vacationDays=$clsEmployeeReport->getVacation();
 
-echo $totalHours;
+
 $clsEmployeeReport->resetCookie();
 
 ?>
