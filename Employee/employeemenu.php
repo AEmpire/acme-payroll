@@ -29,13 +29,19 @@ $clsMenuEmp->resetCookie();
 
     <title>Welcome <?=$employeeData[0][0];?>!</title>
 <body>
-<h1>
+<h1 align="center">
     Welcome <?=$employeeData[0][0];?>!
 </h1>
+<div align="center">
 <a href="timecard.php">timecard</a><br>
+</div>
+
 <?php if ($employeeData[0][4]=='commision'):?>
+<div align="center">
 <a href="purchaseorder.php">Purchase Order</a>
+</div>
 <?php endif; ?>
+    <div align="center">
 <form action="selectpaymentmethod.php" method="get">
     Please choose a payment method:
     <select name="payment">
@@ -45,6 +51,8 @@ $clsMenuEmp->resetCookie();
     </select>
     <input type="submit" name=".submit" value="Go" />
 </form>
+    </div>
+<div align="center">
 <form method="get" action="employeereport.php" >
     <b>
         Generate Payroll Reports
@@ -58,6 +66,9 @@ $clsMenuEmp->resetCookie();
     from
     <input name="firstdate" type="date"> to <input name="lastdate" type="date"><br/>
     <input type="submit" name=".submit" value="Go" /></form><br><br>
+</div>
+<div align="center">
 <form method="get" action="../ProcessLogout.php">
-    </select><input type="submit" name=".submit" value="Logout" /></form>
+    <input type="submit" name=".submit" value="Logout" /></form>
+</div>
 </body>

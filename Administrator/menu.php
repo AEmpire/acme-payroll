@@ -23,17 +23,19 @@ $clsDefault->resetCookie();
 <h1 align="center">
 	Main Menu
 </h1>
-<p>
+<div align="center">
 	Please choose from the following functions:
-</p>
-<p>
+</div>
+    <div align="center">
 	<a href="addeditemployees.php">Add New or Edit Existing Employee</a>
-</p>
+</div>
+<div align="center">
 <form method="get" action="payrollreports.php" >
     <b>
 	Generate Payroll Reports
 </b><br/>
     Report type:
+
 <select name="reporttype" >
     <option value="total hours">total hours</option>
     <option value="pay year-to-date">pay year-to-date</option>
@@ -47,9 +49,12 @@ $clsDefault->resetCookie();
         <?php endforeach;?>
     </select>
 <input type="submit" name=".submit" value="Go" /></form><br><br>
+</div>
+<div align="center">
 <form method="get" action="../ProcessLogout.php">
     </select><input type="submit" name=".submit" value="Logout" /></form>
 </form>
+</div>
 </body>
 </html>
 

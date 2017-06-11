@@ -42,25 +42,26 @@ class ClsAddEditEmployees extends ClsCookieFactory
             if ($this->postDataArray['submit'] == 'delete') {
                 $this->deleteEmployeeData($this->postDataArray['rowid']);
             }
-        }
-        else {
-            if (isset($this->postDataArray['employeeid'])) {
-                $employeeId = $this->cleanse_input($this->postDataArray['employeeid']);
-                $firstName = $this->cleanse_input($this->postDataArray['firstname']);
-                $lastName = $this->cleanse_input($this->postDataArray['lastname']);
-                $hourlyWage = $this->cleanse_input($this->postDataArray['hourlywage']);
-                $employeeType = $this->cleanse_input($this->postDataArray['type']);
-                $taxdeduction = $this->cleanse_input($this->postDataArray['taxdeduction']);
-                if (isset($this->postDataArray['exempt'])) {
-                    $exemptStatus = 1;
-                } else {
-                    $exemptStatus = 0;
+            elseif ($this->postDataArray['submit'] == 'Submit') {
+                if (isset($this->postDataArray['employeeid'])) {
+                    $employeeId = $this->cleanse_input($this->postDataArray['employeeid']);
+                    $firstName = $this->cleanse_input($this->postDataArray['firstname']);
+                    $lastName = $this->cleanse_input($this->postDataArray['lastname']);
+                    $hourlyWage = $this->cleanse_input($this->postDataArray['hourlywage']);
+                    $employeeType = $this->cleanse_input($this->postDataArray['type']);
+                    $taxdeduction = $this->cleanse_input($this->postDataArray['taxdeduction']);
+                    if (isset($this->postDataArray['exempt'])) {
+                        $exemptStatus = 1;
+                    } else {
+                        $exemptStatus = 0;
+                    }
+
+                    $this->dataLayer->addEditEmployee($employeeId, $firstName, $lastName, $hourlyWage, $exemptStatus,$employeeType,$taxdeduction);
                 }
 
-                $this->dataLayer->addEditEmployee($employeeId, $firstName, $lastName, $hourlyWage, $exemptStatus,$employeeType,$taxdeduction);
             }
-
         }
+
     }
 
 

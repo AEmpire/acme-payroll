@@ -37,12 +37,24 @@ $clsEmployeeReport->resetCookie();
     <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"  type="text/javascript"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous" type="text/javascript"></script>
-
+    <script type="text/javascript">
+        function printHtml(html) {
+            var bodyHtml = document.body.innerHTML;
+            document.body.innerHTML = html;
+            window.print();
+            document.body.innerHTML = bodyHtml;
+        }
+        function onprint() {
+            var html = $("#printArea").html();
+            printHtml(html);
+        }
+    </script>
     <title>Payroll Reports</title>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
 <body>
 <p><a href="employeemenu.php">Return to Main Menu</a></p>
+<div id="printArea">
 <?php if ($_GET['reporttype']=='total hours'):?>
 <table align="center" border="1" >
     <tr>
@@ -51,6 +63,12 @@ $clsEmployeeReport->resetCookie();
         </th>
         <th>
             Hours Worked
+        </th>
+        <th>
+            Start
+        </th>
+        <th>
+            End
         </th>
     </tr>
     <?php foreach ($projectData as $projectDatum):?>
@@ -61,6 +79,12 @@ $clsEmployeeReport->resetCookie();
         <th>
             <?=$clsEmployeeReport->getTotalHoursForProject($projectDatum['charge_num']);?>
         </th>
+        <th>
+            <?=$_GET['firstdate']?>
+        </th>
+        <th>
+            <?=$_GET['lastdate']?>
+        </th>
     </tr>
     <?php endforeach;?>
     <tr>
@@ -69,6 +93,12 @@ $clsEmployeeReport->resetCookie();
         </th>
         <th>
             <?=$totalHours;?>
+        </th>
+        <th>
+            <?=$_GET['firstdate']?>
+        </th>
+        <th>
+            <?=$_GET['lastdate']?>
         </th>
     </tr>
 </table>
@@ -81,6 +111,12 @@ $clsEmployeeReport->resetCookie();
         <th>
             Total Vacation
         </th>
+        <th>
+            Start
+        </th>
+        <th>
+            End
+        </th>
     </tr>
     <tr>
         <th>
@@ -88,6 +124,12 @@ $clsEmployeeReport->resetCookie();
         </th>
         <th>
             <?=$vacationDays?>
+        </th>
+        <th>
+            <?=$_GET['firstdate']?>
+        </th>
+        <th>
+            <?=$_GET['lastdate']?>
         </th>
     </tr>
 </table>
@@ -100,6 +142,12 @@ $clsEmployeeReport->resetCookie();
         <th>
             Total Pay
         </th>
+        <th>
+            Start
+        </th>
+        <th>
+            End
+        </th>
     </tr>
     <tr>
         <th>
@@ -108,9 +156,19 @@ $clsEmployeeReport->resetCookie();
         <th>
             <?=$totalPayroll?>
         </th>
+        <th>
+            <?=$_GET['firstdate']?>
+        </th>
+        <th>
+            <?=$_GET['lastdate']?>
+        </th>
     </tr>
 </table>
 <?php endif;?>
+</div>
+<div align="center">
+<input type="button" id="btnPrint" onclick="onprint()" value="print" />
+</div>
 </body>
 </html>
 

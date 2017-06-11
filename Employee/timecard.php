@@ -33,11 +33,11 @@ $clsTimeCard->resetCookie();
     <link rel="stylesheet" href="css/LoginStyle.css" media="screen" type="text/css" />
 </head>
 <body>
-<p>
+<div align="center">
     <a href="employeemenu.php">Return to Main Menu</a>
-</p>
+</div>
 <h1 align="center">Time Card</h1>
-<TABLE border='1' width='100%'>
+<TABLE border='1'>
     <tr>
         <th>
             Date
@@ -85,5 +85,8 @@ $clsTimeCard->resetCookie();
         </tr>
 <?php endif?>
     <?php endforeach; ?>
+    <div>
+
+    </div>
 </TABLE>
 </body>

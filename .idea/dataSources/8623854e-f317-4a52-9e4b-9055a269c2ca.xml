@@ -55,6 +55,7 @@
     <column id="21" parent="9" name="hourly_wage">
       <Position>8</Position>
       <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="22" parent="9" name="standard_tax_deductions">
       <Position>9</Position>

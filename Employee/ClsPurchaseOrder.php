@@ -44,7 +44,7 @@ class ClsPurchaseOrder extends ClsCookieFactory
         if ($this->postDataArray['submit']=='delete') {
             $this->deletePurchaseOrderData($this->postDataArray['rowid']);
         }
-        else {
+        elseif($this->postDataArray['submit']=='Submit') {
             if (isset($this->postDataArray['orderid'])) {
                 $OrderId = $this->cleanse_input($this->postDataArray['orderid']);
                 $Money=$this->cleanse_input($this->postDataArray['money']);

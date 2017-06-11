@@ -1,8 +1,8 @@
 <?php
 
-require_once 'ClsLogin.php';
+require_once 'ClsLogout.php';
 
-$utility = new ruanjian\ClsLogin();
+$utility = new ruanjian\ClsLogout($_COOKIE,$_GET);
 
 $utility->deleteCookie();
 ?>
@@ -12,13 +12,13 @@ $utility->deleteCookie();
         <meta charset="UTF-8">
         <meta http-equiv="refresh" content="1;url=./default.php">
         <script type="text/javascript">
-            window.location.href = "./login.html"
+            window.location.href = "./index.html"
         </script>
         <title>Page Redirection</title>
     </head>
     <body>
 
-    If you are not redirected automatically, follow this <a href='./login.html'></a>.
+    If you are not redirected automatically, follow this <a href='./index.html'></a>.
         </body>
     </html>
 

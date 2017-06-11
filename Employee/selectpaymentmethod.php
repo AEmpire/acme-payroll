@@ -46,9 +46,10 @@ If you are not redirected automatically, follow this <a href='employeemenu.php'>
 <h1 align="center">
     Edit Payment Method
 </h1>
-<p>
+<div align="center">
     <a href="employeemenu.php">Return to Main Menu</a>
-</p>
+</div>
+<div align="center">
 <?php if ($_GET['payment']=='mail'):?>
 <form action="selectpaymentmethod.php">
     <input type="hidden" name="payment" value="<?=$_GET['payment'];?>">
@@ -70,5 +71,6 @@ If you are not redirected automatically, follow this <a href='employeemenu.php'>
     <input type="submit" name="submit" value="submit">
 </form>
 <?php endif;?>
+</div>
 </body>
 <?php endif;?>

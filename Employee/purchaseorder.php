@@ -42,6 +42,16 @@ $clsPurchaseOrder->resetCookie();
             document.getElementById("status").checked(editStatus==="closed");
         }
 
+        function confirmDelete($rowid) {
+            $id="delete"+$rowid;
+            if (confirm("Delete this employee?")){
+                document.getElementById($id).value="delete";
+            }
+            else {
+                document.getElementById($id).value="do";
+            }
+
+        }
 
 
 
@@ -49,15 +59,16 @@ $clsPurchaseOrder->resetCookie();
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
 <body>
-<p>
+<div align="center">
     <a href="employeemenu.php">Return to Main Menu</a>
-</p>
-<h1>
+</div>
+<h1 align="center">
     Add or Edit Purchase Order
 </h1>
-<p>
+<div align="center">
     Please enter the following info for a new employee or choose an employee to edit:
-</p>
+</div>
+<div align="center">
 <form method="get" action="purchaseorder.php" id="purchaseorder">
     <input type="hidden" name="orderid" value="0" id="orderid" /><b>
         Product
@@ -79,6 +90,7 @@ $clsPurchaseOrder->resetCookie();
     </label>
     <br />
     <input type="submit" name="submit" value="Submit" /><input type="reset"  name="reset" value="Reset" /><div><input type="hidden" name=".cgifields" value="open"  /></div></form><br />
+</div>
 <TABLE border='1' width='100%'><tr>
         <th>
             Edit
@@ -103,7 +115,7 @@ $clsPurchaseOrder->resetCookie();
                 <input type="button"  name="Edit" value="Edit" onclick="editrec(<?=$purchaseorderdatum[0];?>)" />
                 <form method="get" action="purchaseorder.php" id="addeditpurchaseorder">
                     <input type="hidden" name="rowid" value="<?=$purchaseorderdatum[0];?>">
-                    <input type="submit" name="submit" value="delete">
+                    <input type="submit" name="submit" id="delete<?=$purchaseorderdatum[0];?>" value="delete" onclick="confirmDelete(<?=$purchaseorderdatum[0];?>)">
                 </form>
                 <?php endif;?>
             </td>

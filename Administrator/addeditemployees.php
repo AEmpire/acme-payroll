@@ -42,7 +42,6 @@ require_once 'ClsAddEditEmployees.php';
             var validNamePattern = new RegExp(/^[A-z0-9 \.\-]{1,50}$/);
             var firstname = document.forms["addeditemployee"]["firstname"].value;
             var lastname = document.forms["addeditemployee"]["lastname"].value;
-            var hourlywage = document.forms["addeditemployee"]["hourlywage"].value;
             var tax=document.forms["addeditemployee"]["taxdeduction"].value;
 
             if (!validNamePattern.test(firstname)) {
@@ -55,30 +54,37 @@ require_once 'ClsAddEditEmployees.php';
                 return false;
             }
 
-            if (isNaN(hourlywage) || hourlywage <= 0) {
-                alert("Hourly Wage must be a number greater than 0");
-                return false;
-            }
             if (isNaN(tax)) {
                 alert("Tax cannot be null");
                 return false;
             }
         }
 
+        function confirmDelete($rowid) {
+            $id="delete"+$rowid;
+            if (confirm("Delete this employee?")){
+                document.getElementById($id).value="delete";
+            }
+            else {
+                document.getElementById($id).value="do";
+            }
+
+        }
 
         //]]></script>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 </head>
 <body>
-<p>
-    <a align="center" href="menu.php">Return to Main Menu</a>
-</p>
-<h1>
+<div align="center">
+    <a href="menu.php">Return to Main Menu</a>
+</div>
+<h1 align="center">
     Add or Edit Employee
 </h1>
-<p>
+<div align="center">
     Please enter the following info for a new employee or choose an employee to edit:
-</p>
+</div>
+<div align="center">
 <form method="get" action="addeditemployees.php" id="addeditemployee" onsubmit="return validateform();">
     <input type="hidden" name="employeeid" value="0" id="employeeid" /><b>
         First Name of Employee:
@@ -91,7 +97,7 @@ require_once 'ClsAddEditEmployees.php';
     <b>
         Hourly Wage
     </b>
-    <input type="text" name="hourlywage"  size="10" id="hourlywage" /><br />
+    <input type="text" name="hourlywage"  value="0" size="10" id="hourlywage" /><br />
     <b>
         employeetype:
     </b>
@@ -116,6 +122,7 @@ require_once 'ClsAddEditEmployees.php';
     </label>
     <br />
     <input type="submit" name="submit" value="Submit" /><input type="reset"  name="reset" value="Reset" /><div><input type="hidden" name=".cgifields" value="exempt"  /></div></form><br />
+</div>
 <TABLE border='1' width='100%'><tr>
         <th>
             Edit
@@ -139,11 +146,11 @@ require_once 'ClsAddEditEmployees.php';
     <?php foreach ($employeeData as $employeeDatum):  ?>
     <tr id="<?=$employeeDatum[0];?>">
         <td><input type="button"  name="Edit" value="Edit" onclick="editrec(<?=$employeeDatum[0];?>,<?=$employeeDatum[6];?>)" />
-
-            <form method="get" action="addeditemployees.php" id="addeditemployee">
+            <form method="get" action="addeditemployees.php" id="deleteemployee">
                 <input type="hidden" name="rowid" value="<?=$employeeDatum[0];?>">
-                <input type="submit" name="submit" value="delete">
+                <input type="submit" name="submit" value="delete" id="delete<?=$employeeDatum[0];?>" onclick="confirmDelete(<?=$employeeDatum[0];?>)">
             </form>
+
         </td>
         <td><?=$employeeDatum[1];?></td> <td><?=$employeeDatum[2];?></td> <td><?=$employeeDatum[3];?></td>
         <td><?=$employeeDatum[4] == 1 ? "Yes" : "No";?></td><td><?=$employeeDatum[5];?></td>
