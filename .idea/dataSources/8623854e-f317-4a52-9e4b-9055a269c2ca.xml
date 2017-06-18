@@ -8,18 +8,18 @@
     <schema id="3" parent="1" name="mysql"/>
     <schema id="4" parent="1" name="performance_schema"/>
     <schema id="5" parent="1" name="sys"/>
-    <schema id="6" parent="1" name="payroll_system">
-      <Visible>1</Visible>
-    </schema>
-    <schema id="7" parent="1" name="bookinfo">
+    <schema id="6" parent="1" name="bookinfo">
       <Current>1</Current>
     </schema>
-    <schema id="8" parent="1" name="dotnetspider"/>
-    <table id="9" parent="6" name="employees"/>
-    <table id="10" parent="6" name="project_management_database"/>
-    <table id="11" parent="6" name="purchase_order"/>
-    <table id="12" parent="6" name="timecard"/>
-    <table id="13" parent="6" name="users"/>
+    <schema id="7" parent="1" name="dotnetspider"/>
+    <schema id="8" parent="1" name="payroll_system">
+      <Visible>1</Visible>
+    </schema>
+    <table id="9" parent="8" name="employees"/>
+    <table id="10" parent="8" name="project_management_database"/>
+    <table id="11" parent="8" name="purchase_order"/>
+    <table id="12" parent="8" name="timecard"/>
+    <table id="13" parent="8" name="users"/>
     <column id="14" parent="9" name="employee_id">
       <Position>1</Position>
       <DataType>int(20)|0</DataType>
@@ -181,7 +181,6 @@
       <Position>4</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
-      <DefaultExpression>&apos;2016-12-01&apos;</DefaultExpression>
     </column>
     <column id="48" parent="12" name="employee_id">
       <Position>5</Position>
@@ -203,10 +202,16 @@ employee_id</ColNames>
     <column id="52" parent="13" name="user_name">
       <Position>1</Position>
       <DataType>char(40)|0</DataType>
+      <NotNull>1</NotNull>
     </column>
     <column id="53" parent="13" name="user_pwd">
       <Position>2</Position>
       <DataType>char(20)|0</DataType>
     </column>
+    <key id="54" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_name</ColNames>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>

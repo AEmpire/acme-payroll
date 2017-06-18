@@ -85,8 +85,5 @@ $clsTimeCard->resetCookie();
         </tr>
 <?php endif?>
     <?php endforeach; ?>
-    <div>
-
-    </div>
 </TABLE>
 </body>

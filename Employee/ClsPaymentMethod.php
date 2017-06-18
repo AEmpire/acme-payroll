@@ -21,12 +21,11 @@ class ClsPaymentMethod extends ClsCookieFactory
         $this->cookieOk = $this->checkAuthCookie();
 
         if ($this->cookieOk == 1) {
+            $this->clsDatalayer->editPaymentMethod($_SESSION['id'],$this->postDataArray['payment']);
             if (isset($this->postDataArray['bank'])){
-                $this->clsDatalayer->editPaymentMethod($_SESSION['id'],$this->postDataArray['payment']);
                 $this->clsDatalayer->editBank($this->postDataArray['bank'],$this->postDataArray['num'],$_SESSION['id']);
             }
             elseif (isset($this->postDataArray['mail'])){
-                $this->clsDatalayer->editPaymentMethod($_SESSION['id'],$this->postDataArray['payment']);
                 $this->clsDatalayer->editMail($_SESSION['id'],$this->postDataArray['mail']);
             }
         }

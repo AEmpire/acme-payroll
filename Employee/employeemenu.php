@@ -14,7 +14,6 @@ $clsMenuEmp = new ruanjian\ClsMenuEmp($_COOKIE,$_POST);
 $clsMenuEmp->processPageData();
 $employeeData = $clsMenuEmp->getEmployeeData();
 $clsMenuEmp->resetCookie();
-
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
