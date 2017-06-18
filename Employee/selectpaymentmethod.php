@@ -29,7 +29,7 @@ $clsEmployeeReport->resetCookie();
 </head>
 <body>
 
-If you are not redirected automatically, follow this <a href='employeemenu.php'></a>
+If you are not redirected automatically, follow this <a href='3PaymentMethod.php'></a>
 </body>
 </html>
 <?php else:?>
