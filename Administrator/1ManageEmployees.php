@@ -42,7 +42,11 @@ $clsAddEditEmployees->resetCookie();
             var editFirstName = document.getElementById(rowid).cells[1].innerHTML;
             var editLastName = document.getElementById(rowid).cells[2].innerHTML;
             var editHourlyWage = document.getElementById(rowid).cells[3].innerHTML;
-            var editExemptFlag = document.getElementById(rowid).cells[4].innerHTML;
+            var editExemptFlag = document.getElementById(rowid).cells[6].innerHTML;
+            var editType=document.getElementById(rowid).cells[7].innerHTML;
+            var editSalary=document.getElementById(rowid).cells[4].innerHTML;
+            var editCommissionRate=document.getElementById(rowid).cells[5].innerHTML;
+
 
             document.getElementById("employeeid").value = editEmployeeID;
             document.getElementById("taxdeduction").value = editStandardTax;
@@ -50,6 +54,10 @@ $clsAddEditEmployees->resetCookie();
             document.getElementById("lastname").value =  editLastName;
             document.getElementById("hourlywage").value =  editHourlyWage;
             document.getElementById("exempt").checked =  (editExemptFlag === "Yes");
+            document.getElementById("type").value=editType;
+            document.getElementById("salary").value=editSalary;
+            document.getElementById("commision_rate").value=editCommissionRate;
+            selectType();
         }
 
         function validateform() {
@@ -85,7 +93,23 @@ $clsAddEditEmployees->resetCookie();
             }
 
         }
-
+        function selectType() {
+            if (document.getElementById("type").value==="hourly"){
+                document.getElementById("hourly").style.display="block";
+                document.getElementById("employee_commission_rate").style.display="none";
+                document.getElementById("employee_salary").style.display="none";
+            }
+            else if (document.getElementById("type").value==="salary"){
+                document.getElementById("hourly").style.display="none";
+                document.getElementById("employee_commission_rate").style.display="none";
+                document.getElementById("employee_salary").style.display="block";
+            }
+            else {
+                document.getElementById("hourly").style.display="none";
+                document.getElementById("employee_commission_rate").style.display="block";
+                document.getElementById("employee_salary").style.display="block";
+            }
+        }
         //]]></script>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
@@ -149,44 +173,54 @@ $clsAddEditEmployees->resetCookie();
                     Add or Edit Employee
                 </h1>
                 <div align="center">
-                    Please enter the following info for a new employee or choose an employee to edit:
-                </div>
-                <div align="center">
                     <form method="get" action="1ManageEmployees.php" id="addeditemployee" onsubmit="return validateform();">
-                        <input type="hidden" name="employeeid" value="0" id="employeeid" /><b>
+                        <input type="hidden" name="employeeid" value="0" id="employeeid" />
+                        <div style="padding-top: 5px">
                             First Name of Employee:
-                        </b>
-                        <input type="text" name="firstname"  size="50" id="firstname" /><br />
-                        <b>
+
+                        <input type="text" name="firstname"  size="20" id="firstname" />
+                        </div>
+                        <div style="padding-top: 5px">
                             Last Name of Employee:
-                        </b>
-                        <input type="text" name="lastname"  size="50" id="lastname" /><br />
-                        <b>
-                            Hourly Wage
-                        </b>
-                        <input type="text" name="hourlywage"  value="0" size="10" id="hourlywage" /><br />
-                        <b>
+                        <input type="text" name="lastname"  size="20" id="lastname" />
+                        </div>
+                        <div style="padding-top: 5px">
                             employeetype:
-                        </b>
-                        <b>
-                            <select name="type">
+                            <select  name="type" id="type" onchange="selectType()">
+                                <option value="" selected="selected" disabled="disabled">choose employee type</option>
                                 <option value="hourly">hourly</option>
                                 <option value="commision">commision</option>
                                 <option value="salary">salary</option>
-                            </select><br/>
-                        </b>
-                        <b>
+                            </select>
+                        </div>
+                        <div id="hourly" style="display: none;padding-top: 5px">
+                            Hourly Wage:
+                            <input type="text"  name="hourlywage" value="0" size="20" id="hourlywage" /><br />
+                        </div>
+                        <div id="employee_salary" style="display: none;padding-top: 5px">
+                            Salary:
+                            <input value="0" name="salary" size="20" id="salary" />
+                        </div>
+                        <div id="employee_commission_rate" style="display: none;padding-top: 5px">
+                            Commission rate:
+                            <select name="commision_rate" id="commision_rate">
+                                <option value="0">choose commision rate</option>
+                                <option value="0.15">15%</option>
+                                <option value="0.25">25%</option>
+                                <option value="0.35">35%</option>
+                            </select>
+                        </div>
+                        <div style="padding-top: 5px">
                             tax deductions
-                        </b>
-                        <b>
-                            <input type="text" name="taxdeduction" size="10" id="taxdeduction"><br/>
-                        </b>
-                        <b>
+                            <input type="text" name="taxdeduction" size="10" id="taxdeduction">
+                        </div>
+                        <div style="padding-top: 5px">
                             Employee is exempt from overtime pay
-                        </b>
+
                         <label>
                             <input type="checkbox" name="exempt" value="on" id="exempt" />exempt
                         </label>
+                        </div>
                         <br />
                         <input type="submit" name="submit" value="Submit" /><input type="reset"  name="reset" value="Reset" /><div><input type="hidden" name=".cgifields" value="exempt"  /></div></form><br />
                 </div>
@@ -204,6 +238,12 @@ $clsAddEditEmployees->resetCookie();
                             Wage
                         </th>
                         <th>
+                            Salary
+                        </th>
+                        <th>
+                            Commission rate
+                        </th>
+                        <th>
                             Exempt
                         </th>
                         <th>
@@ -219,7 +259,7 @@ $clsAddEditEmployees->resetCookie();
                                 </form>
 
                             </td>
-                            <td><?=$employeeDatum[1];?></td> <td><?=$employeeDatum[2];?></td> <td><?=$employeeDatum[3];?></td>
+                            <td><?=$employeeDatum[1];?></td> <td><?=$employeeDatum[2];?></td> <td><?=$employeeDatum[3];?></td><td><?=$employeeDatum[7];?></td><td><?=$employeeDatum[8];?></td>
                             <td><?=$employeeDatum[4] == 1 ? "Yes" : "No";?></td><td><?=$employeeDatum[5];?></td>
                         </tr>
                     <?php endforeach; ?>

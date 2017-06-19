@@ -30,23 +30,23 @@ class ClsDataLayer
         }
     }
 
-    function addEditEmployee($inEmployeeId, $inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax) {
+    function addEditEmployee($inEmployeeId, $inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax,$inSalary,$inCommisionRate) {
 
         $this->dbConnect();
 
         if ($inEmployeeId == 0) {
 
-            $inputSql = "Insert Into Employees (employee_first_name, employee_last_name, hourly_wage, exempt_flag,employee_type,standard_tax_deductions)  VALUES (?, ?, ?, ?,?,?);";
+            $inputSql = "Insert Into Employees (employee_first_name, employee_last_name, hourly_wage, exempt_flag,employee_type,standard_tax_deductions,salary,commission_rate)  VALUES (?, ?, ?, ?,?,?,?,?);";
 
             $sth = $this->inDBH->prepare($inputSql);
-            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax));
+            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax,$inSalary,$inCommisionRate));
         }
 
         else {
-            $inputSql = "Update Employees set employee_first_name = ?, employee_last_name = ?, hourly_wage = ?, exempt_flag = ? ,employee_type=?,standard_tax_deductions=?Where employee_id = ?";
+            $inputSql = "Update Employees set employee_first_name = ?, employee_last_name = ?, hourly_wage = ?, exempt_flag = ? ,employee_type=?,standard_tax_deductions=?,salary=?,commission_rate=? Where employee_id = ?";
 
             $sth = $this->inDBH->prepare($inputSql);
-            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax ,$inEmployeeId));
+            $sth->execute(Array($inFirstName, $inLastName, $inHourlyWage, $inExemptStatus,$inEmployeeType,$tax ,$inSalary,$inCommisionRate,$inEmployeeId));
 
         }
 
@@ -56,7 +56,7 @@ class ClsDataLayer
 
         $this->dbConnect();
 
-        $inputSql = "select employee_id,employee_first_name, employee_last_name, hourly_wage, exempt_flag ,employee_type,standard_tax_deductions from Employees
+        $inputSql = "select employee_id,employee_first_name, employee_last_name, hourly_wage, exempt_flag ,employee_type,standard_tax_deductions,salary,commission_rate from Employees
 	                order by employee_id";
 
         $sth = $this->inDBH->prepare($inputSql);

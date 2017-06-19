@@ -96,7 +96,7 @@ $clsMenuEmp->resetCookie();
             <div align="center">
                 <form action="selectpaymentmethod.php" method="get">
                     Please choose a payment method:
-                    <select name="payment">
+                    <select name='payment'>
                         <option value="pick-up">Pick up</option>
                         <option value="mail">Mail</option>
                         <option value="direct-deposit">Direct deposit</option>

@@ -50,13 +50,16 @@ class ClsAddEditEmployees extends ClsCookieFactory
                     $hourlyWage = $this->cleanse_input($this->postDataArray['hourlywage']);
                     $employeeType = $this->cleanse_input($this->postDataArray['type']);
                     $taxdeduction = $this->cleanse_input($this->postDataArray['taxdeduction']);
+                    $salary=$this->cleanse_input($this->postDataArray['salary']);
+                    $commisionrate=$this->cleanse_input($this->postDataArray['commision_rate']);
+
                     if (isset($this->postDataArray['exempt'])) {
                         $exemptStatus = 1;
                     } else {
                         $exemptStatus = 0;
                     }
 
-                    $this->dataLayer->addEditEmployee($employeeId, $firstName, $lastName, $hourlyWage, $exemptStatus,$employeeType,$taxdeduction);
+                    $this->dataLayer->addEditEmployee($employeeId, $firstName, $lastName, $hourlyWage, $exemptStatus,$employeeType,$taxdeduction,$salary,$commisionrate);
                 }
 
             }
