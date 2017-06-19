@@ -24,7 +24,7 @@ class ClsDataLayer
                 $this->inDBH->setAttribute(PDO::ATTR_AUTOCOMMIT, true);
 
             } catch (\PDOException $e) {
-                print "Error!: Database Connection Unavailable" . "<br/>";
+                print "Fatal Error!: Database Connection Unavailable" . "<br/>";
                 die();
             }
         }
